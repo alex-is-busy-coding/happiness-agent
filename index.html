@@ -3,459 +3,187 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>What Makes a Happy Life?</title>
-        <style>
-            :root {
-                color-scheme: light;
-                --page: #f9f9f7;
-                --surface: #fcfcfb;
-                --ink: #0b0b0b;
-                --ink-2: #52514e;
-                --muted: #898781;
-                --grid: #e1e0d9;
-                --border: rgba(11, 11, 11, 0.1);
-                --accent: #2a78d6;
-                --series-1: #2a78d6;
-                --series-2: #eb6834;
-                --series-3: #1baf7a;
-                --error: #d03b3b;
-            }
-            @media (prefers-color-scheme: dark) {
-                :root {
-                    color-scheme: dark;
-                    --page: #0d0d0d;
-                    --surface: #1a1a19;
-                    --ink: #f0efec;
-                    --ink-2: #c3c2b7;
-                    --muted: #898781;
-                    --grid: #2c2c2a;
-                    --border: rgba(255, 255, 255, 0.1);
-                    --accent: #3987e5;
-                    --series-1: #3987e5;
-                    --series-2: #d95926;
-                    --series-3: #199e70;
-                    --error: #e66767;
-                }
-            }
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
-            body {
-                font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-                background: var(--page);
-                color: var(--ink);
-                padding: 2rem 1rem;
-                line-height: 1.6;
-            }
-            main {
-                max-width: 780px;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                gap: 1.25rem;
-            }
-            header h1 {
-                font-size: 1.6rem;
-                letter-spacing: -0.01em;
-            }
-            header p {
-                color: var(--ink-2);
-                font-size: 0.95rem;
-                margin-top: 0.4rem;
-            }
-            header .how {
-                color: var(--muted);
-                font-size: 0.85rem;
-                margin-top: 0.4rem;
-            }
-            section {
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 8px;
-                padding: 1.25rem 1.5rem;
-            }
-            h2 {
-                font-size: 0.75rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                color: var(--muted);
-                font-weight: 500;
-                margin-bottom: 0.75rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-            }
-            #question {
-                width: 100%;
-                padding: 0.6rem 0;
-                border: none;
-                border-bottom: 1px solid var(--grid);
-                font-size: 1rem;
-                outline: none;
-                background: transparent;
-                color: var(--ink);
-            }
-            #question:focus {
-                border-bottom-color: var(--accent);
-            }
-            .examples {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                margin-top: 0.9rem;
-            }
-            .examples button {
-                background: transparent;
-                border: 1px solid var(--grid);
-                border-radius: 999px;
-                color: var(--ink-2);
-                font-size: 0.8rem;
-                padding: 0.3rem 0.8rem;
-                cursor: pointer;
-            }
-            .examples button:hover {
-                border-color: var(--accent);
-                color: var(--accent);
-            }
-            #run {
-                margin-top: 1rem;
-                padding: 0.7rem 1.6rem;
-                background: var(--ink);
-                color: var(--page);
-                border: none;
-                border-radius: 6px;
-                font-size: 0.8rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                cursor: pointer;
-            }
-            #run:disabled {
-                opacity: 0.35;
-            }
-            #activity {
-                list-style: none;
-                font-size: 0.85rem;
-                line-height: 1.8;
-                color: var(--ink-2);
-            }
-            #activity .agent {
-                font-weight: 600;
-                color: var(--ink);
-            }
-            #activity .error {
-                color: var(--error);
-            }
-            #status {
-                color: var(--muted);
-                text-transform: none;
-                letter-spacing: 0;
-            }
-            .clarify {
-                border-left: 3px solid var(--series-2);
-                padding-left: 1rem;
-                color: var(--ink-2);
-            }
-            .clarify strong {
-                color: var(--ink);
-            }
-            #report {
-                font-size: 0.95rem;
-            }
-            #report.empty,
-            #activity .empty {
-                color: var(--muted);
-            }
-            #report h1,
-            #report h2,
-            #report h3 {
-                margin: 1.2rem 0 0.5rem;
-                line-height: 1.3;
-                color: var(--ink);
-                text-transform: none;
-                letter-spacing: 0;
-                display: block;
-            }
-            #report h1 {
-                font-size: 1.25rem;
-            }
-            #report h2 {
-                font-size: 1.05rem;
-                font-weight: 600;
-            }
-            #report h3 {
-                font-size: 0.95rem;
-                font-weight: 600;
-            }
-            #report p,
-            #report ul,
-            #report ol {
-                margin: 0.6rem 0;
-            }
-            #report ul,
-            #report ol {
-                padding-left: 1.4rem;
-            }
-            #report table {
-                border-collapse: collapse;
-                font-size: 0.85rem;
-                margin: 0.8rem 0;
-                font-variant-numeric: tabular-nums;
-            }
-            #report th,
-            #report td {
-                border: 1px solid var(--grid);
-                padding: 0.35rem 0.7rem;
-                text-align: left;
-            }
-            #report th {
-                color: var(--ink-2);
-                font-weight: 600;
-            }
-            #report code {
-                font-family: ui-monospace, monospace;
-                font-size: 0.85em;
-                background: var(--page);
-                padding: 0.1em 0.3em;
-                border-radius: 3px;
-            }
-            #report pre code {
-                display: block;
-                padding: 0.8rem;
-                overflow-x: auto;
-            }
-            .chart-box {
-                margin: 1.2rem 0;
-                padding: 1rem 0.5rem 0.5rem;
-                border: 1px solid var(--grid);
-                border-radius: 8px;
-            }
-            .chart-box .chart-title {
-                font-size: 0.85rem;
-                font-weight: 600;
-                color: var(--ink);
-                padding: 0 0.6rem 0.4rem;
-            }
-            .chart-box canvas {
-                max-height: 320px;
-            }
-            footer {
-                color: var(--muted);
-                font-size: 0.78rem;
-                padding: 0 0.25rem 2rem;
-            }
-        </style>
+        <title>the happiness desk</title>
+        <meta
+            name="description"
+            content="Ask what makes a happy life. A small team of AI researchers digs through fifty years of survey data and files a short, charted story, with every query shown."
+        />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23ffd84a' stroke='%231b1813' stroke-width='3'/%3E%3C/svg%3E"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Hanken+Grotesk:wght@400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/static/style.css" />
     </head>
-    <body>
-        <main>
-            <header>
-                <h1>What makes a happy life?</h1>
-                <p>
-                    A research agent that answers your questions about happiness with real survey data:
-                    75,699 Americans interviewed since 1972 (General Social Survey), 169 countries scored
-                    yearly by the Gallup World Poll (World Happiness Report), and moment-by-moment feelings
-                    people reported during their daily activities (American Time Use Survey Well-Being Module).
-                    Built for the curious: students, journalists, and anyone who wonders whether money,
-                    marriage, or friends actually move the needle.
-                </p>
-                <p class="how">
-                    Ask a question below (or tap an example). A lead agent splits it into tasks, researchers
-                    query the data in parallel with SQL, and a writer reports back with charts and citations.
-                    A run takes one to three minutes; watch the agents work in the activity log.
-                </p>
-            </header>
+    <body data-view="home">
+        <header class="masthead">
+            <a class="wordmark" href="/" data-home>the happiness desk</a>
+            <nav>
+                <a href="#" id="working" hidden>desk is working</a>
+                <a href="/#archive" data-home="archive">archive</a>
+                <a href="/#how" data-home="how">how it works</a>
+            </nav>
+        </header>
 
-            <section>
-                <h2>Your question</h2>
-                <form id="task">
-                    <input
-                        id="question"
-                        value="Does more money make people happier, and does it ever stop mattering?"
-                        placeholder="Ask anything about happiness, wellbeing, or life satisfaction"
-                        autocomplete="off"
-                    />
-                    <div class="examples" id="examples">
-                        <button type="button">Does more money make people happier?</button>
-                        <button type="button">Are married people happier than single people?</button>
-                        <button type="button">How much does seeing friends matter for happiness?</button>
-                        <button type="button">Why do Nordic countries top the happiness rankings?</button>
-                        <button type="button">Are Americans getting less happy over time?</button>
-                    </div>
-                    <button id="run" type="submit">Research</button>
+        <!-- Home: ask a question, or read something from the archive -->
+        <main id="home" class="view">
+            <section class="hero">
+                <div class="seal" aria-hidden="true">
+                    <svg viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="97" fill="#ffd84a" stroke="#1b1813" stroke-width="3" />
+                        <g class="ring">
+                            <path id="seal-path" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0" fill="none" />
+                            <text>
+                                <textPath href="#seal-path">
+                                    EVERY NUMBER COMES FROM A QUERY &#10033; EVERY QUERY IS SHOWN &#10033;
+                                </textPath>
+                            </text>
+                        </g>
+                        <circle cx="100" cy="100" r="52" fill="#fcfcfb" stroke="#1b1813" stroke-width="3" />
+                        <path
+                            d="M72 96 q8 -10 16 0 M112 96 q8 -10 16 0 M76 112 q24 22 48 0"
+                            fill="none" stroke="#1b1813" stroke-width="5" stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+                <p class="eyebrow">a tiny data newsroom &middot; staffed by AI agents &middot; every query shown</p>
+                <h1>what makes a <mark>happy</mark> life?</h1>
+                <p class="dek">
+                    Ask anything about happiness. A lead agent plans the investigation, researchers dig through
+                    half a century of surveys in parallel, and a writer files a short story with charts and
+                    sources. For the curious, the skeptical, and anyone who has wondered whether money, marriage
+                    or friends actually move the needle.
+                </p>
+                <ul class="pills" id="data-pills" aria-label="What the desk has to work with"></ul>
+                <form class="ask" autocomplete="off">
+                    <label class="sr-only" for="ask-home">Your question</label>
+                    <input id="ask-home" name="question" type="text" placeholder="does money buy happiness?" />
+                    <button type="submit">ask the desk <span aria-hidden="true">&rarr;</span></button>
                 </form>
+                <div class="tries" id="examples" aria-label="Example questions"></div>
             </section>
 
-            <section>
-                <h2>Activity <span id="status"></span></h2>
-                <ol id="activity"><li class="empty">Each agent's steps appear here while the team works.</li></ol>
+            <section class="shelf" id="archive">
+                <div class="shelf-head">
+                    <h2>from the archive</h2>
+                    <p>Already researched. These open instantly.</p>
+                </div>
+                <div class="cards" id="archive-cards"></div>
             </section>
 
-            <section>
-                <h2>Report</h2>
-                <div id="report" class="empty">The report appears here, with charts drawn from the queried data.</div>
+            <section class="shelf" id="mine" hidden>
+                <div class="shelf-head">
+                    <h2>stories you commissioned</h2>
+                    <p>Kept in this browser.</p>
+                </div>
+                <div class="cards" id="mine-cards"></div>
             </section>
 
-            <footer>
-                Sources: NORC General Social Survey 1972&ndash;2024 &middot; World Happiness Report 2026 (Gallup
-                World Poll) &middot; BLS American Time Use Survey Well-Being Module 2021. Survey answers are
-                correlations, not proof of causation &mdash; the agent will say so when it matters.
-            </footer>
+            <section class="how" id="how">
+                <h2>how it works</h2>
+                <ol>
+                    <li>
+                        <span class="step">01</span>
+                        <h3>you ask</h3>
+                        <p>
+                            Anything about happiness, wellbeing or life satisfaction. If the question is too vague, or
+                            the data can't cover it, the desk says so and suggests sharper ones.
+                        </p>
+                    </li>
+                    <li>
+                        <span class="step">02</span>
+                        <h3>the desk digs</h3>
+                        <p>
+                            A lead splits your question into tasks. Up to six researchers work them at the same time,
+                            each writing SQL against the survey data. You can watch every query as it runs.
+                        </p>
+                    </li>
+                    <li>
+                        <span class="step">03</span>
+                        <h3>a story gets filed</h3>
+                        <p>
+                            A writer turns the findings into a short piece: the answer first, then charts, sources on
+                            every claim, and what the data can't tell you. It takes two to four minutes.
+                        </p>
+                    </li>
+                </ol>
+            </section>
         </main>
 
+        <!-- The desk: a run in progress -->
+        <main id="desk" class="view" hidden>
+            <section class="desk-head">
+                <p class="eyebrow" id="desk-eyebrow">the desk is on it</p>
+                <h1 id="desk-question"></h1>
+                <ol class="stages" id="stages" aria-label="Progress">
+                    <li data-stage="plan">plan</li>
+                    <li data-stage="research">research</li>
+                    <li data-stage="check">gap check</li>
+                    <li data-stage="write">write</li>
+                </ol>
+                <p class="desk-meta" id="desk-meta">
+                    <span id="timer" aria-label="Elapsed time">0:00</span>
+                    <span>usually 2 to 4 minutes</span>
+                    <button type="button" class="link" id="cancel">cancel</button>
+                    <button type="button" class="link" data-context-toggle>see how the agents think</button>
+                </p>
+            </section>
+            <div class="desk-grid" id="desk-grid">
+                <section class="board" id="board"></section>
+                <aside class="guess" id="guess" hidden></aside>
+            </div>
+            <section class="outcome" id="outcome" hidden></section>
+        </main>
+
+        <!-- A story -->
+        <main id="story" class="view" hidden>
+            <article>
+                <header class="story-hero">
+                    <div class="story-hero-inner">
+                        <p class="issue" id="story-issue"></p>
+                        <h1 id="story-title"></h1>
+                        <p class="hook" id="story-hook"></p>
+                        <p class="asked" id="story-asked"></p>
+                    </div>
+                </header>
+                <div class="lede">
+                    <blockquote id="story-answer"></blockquote>
+                    <div class="stats" id="story-stats"></div>
+                </div>
+                <div class="story-body" id="story-body"></div>
+                <section class="methods" id="story-methods"></section>
+                <section class="next">
+                    <h2>keep pulling the thread</h2>
+                    <div class="tries" id="story-followups"></div>
+                    <form class="ask" autocomplete="off">
+                        <label class="sr-only" for="ask-story">Your next question</label>
+                        <input id="ask-story" name="question" type="text" placeholder="or ask something of your own" />
+                        <button type="submit">ask the desk <span aria-hidden="true">&rarr;</span></button>
+                    </form>
+                    <p class="next-links">
+                        <a href="/" data-home>&larr; back to the archive</a>
+                        <button type="button" class="link" id="copy-link">copy link to this story</button>
+                    </p>
+                </section>
+            </article>
+        </main>
+
+        <footer class="colophon">
+            <p id="colophon-sources">
+                Sources: NORC General Social Survey &middot; World Happiness Report 2026 (Gallup World Poll).
+            </p>
+            <p>Survey answers show what goes together, not what causes what. The desk will say so when it matters.</p>
+        </footer>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
         <script src="/context-panel.js"></script>
-        <script>
-            const $ = (id) => document.getElementById(id);
-            let source = null;
-            let runId = null;
-            let charts = [];
-
-            const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-            const SERIES = () => [css("--series-1"), css("--series-2"), css("--series-3")];
-
-            function addActivity(agent, text, cls = "") {
-                const li = document.createElement("li");
-                li.className = cls;
-                if (agent) {
-                    const name = document.createElement("span");
-                    name.className = "agent";
-                    name.textContent = agent + " ";
-                    li.appendChild(name);
-                }
-                li.append(text);
-                $("activity").appendChild(li);
-                li.scrollIntoView({ block: "nearest" });
-            }
-
-            function drawChart(spec, container) {
-                const box = document.createElement("div");
-                box.className = "chart-box";
-                if (spec.title) {
-                    const t = document.createElement("div");
-                    t.className = "chart-title";
-                    t.textContent = spec.title;
-                    box.appendChild(t);
-                }
-                const canvas = document.createElement("canvas");
-                box.appendChild(canvas);
-                container.replaceWith(box);
-
-                const colors = SERIES();
-                const scatter = spec.type === "scatter";
-                const datasets = (spec.series || []).slice(0, 3).map((s, i) => ({
-                    label: s.name || "",
-                    data: s.data,
-                    backgroundColor: colors[i],
-                    borderColor: colors[i],
-                    borderWidth: spec.type === "line" ? 2 : 0,
-                    pointRadius: 4,
-                    borderRadius: spec.type === "bar" ? { topLeft: 4, topRight: 4 } : 0,
-                    tension: 0.15,
-                }));
-                const axis = (title) => ({
-                    grid: { color: css("--grid") },
-                    border: { color: css("--grid") },
-                    ticks: { color: css("--muted"), font: { size: 11 } },
-                    title: { display: !!title, text: title || "", color: css("--ink-2"), font: { size: 11 } },
-                });
-                charts.push(
-                    new Chart(canvas, {
-                        type: scatter ? "scatter" : spec.type === "line" ? "line" : "bar",
-                        data: { labels: spec.labels, datasets },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: { ...axis(spec.x_label), type: scatter ? "linear" : "category" },
-                                y: axis(spec.y_label),
-                            },
-                            plugins: {
-                                legend: {
-                                    display: datasets.length > 1,
-                                    labels: { color: css("--ink-2"), boxWidth: 12, font: { size: 11 } },
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: (item) => {
-                                            const point = item.raw;
-                                            if (scatter && point && point.label)
-                                                return `${point.label}: (${point.x}, ${point.y})`;
-                                            return `${item.dataset.label || ""}: ${item.formattedValue}`;
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    })
-                );
-            }
-
-            function showReport(markdown, clarify = false) {
-                const report = $("report");
-                report.className = clarify ? "clarify" : "";
-                charts.forEach((c) => c.destroy());
-                charts = [];
-                if (clarify) {
-                    report.innerHTML = "<strong>The agent needs a sharper question:</strong><br/>";
-                    report.append(markdown);
-                    return;
-                }
-                report.innerHTML = marked.parse(markdown);
-                report.querySelectorAll("pre code.language-chart").forEach((code) => {
-                    try {
-                        drawChart(JSON.parse(code.textContent), code.parentElement);
-                    } catch (e) {
-                        /* leave the raw block visible */
-                    }
-                });
-            }
-
-            function finish(message) {
-                $("status").textContent = message;
-                $("run").disabled = false;
-                if (source) source.close();
-            }
-
-            $("examples").addEventListener("click", (e) => {
-                if (e.target.tagName === "BUTTON") $("question").value = e.target.textContent;
-            });
-
-            $("task").addEventListener("submit", (e) => {
-                e.preventDefault();
-                if (source) source.close();
-                const params = new URLSearchParams({ question: $("question").value.trim() });
-
-                $("activity").replaceChildren();
-                $("report").className = "empty";
-                $("report").textContent = "The report appears here, with charts drawn from the queried data.";
-                $("status").textContent = "running";
-                $("run").disabled = true;
-                resetContext();
-
-                source = new EventSource("/run?" + params);
-                source.onmessage = (msg) => {
-                    const event = JSON.parse(msg.data);
-                    if (event.type === "start") runId = event.run_id;
-                    else if (event.type === "context") showContext(runId);
-                    else if (event.type === "activity") addActivity(event.agent, event.text);
-                    else if (event.type === "report") {
-                        showReport(event.markdown);
-                        finish("done");
-                    } else if (event.type === "clarify") {
-                        showReport(event.markdown, true);
-                        finish("needs a sharper question");
-                    } else if (event.type === "error") {
-                        addActivity("", event.message, "error");
-                        finish("failed");
-                    }
-                };
-                source.onerror = () => {
-                    addActivity("", "Lost the connection to the server.", "error");
-                    finish("failed");
-                };
-            });
-        </script>
+        <script src="/static/app.js"></script>
     </body>
 </html>
