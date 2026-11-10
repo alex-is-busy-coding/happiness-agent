@@ -1,0 +1,19 @@
+[project]
+name = "happiness-agent"
+version = "0.1.0"
+description = "Deep research agent over happiness survey data: a lead fans out researchers that query GSS, WHR and ATUS with SQL, then a writer turns their findings into a cited, charted report"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+    "openai-agents[litellm]>=0.22",
+    "google-cloud-aiplatform>=1.40.0",
+    "duckdb>=1.0",
+    "python-dotenv>=1.0",
+]
+
+[dependency-groups]
+prep = [
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+]
