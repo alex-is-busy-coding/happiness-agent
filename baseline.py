@@ -15,7 +15,7 @@ load_dotenv(Path(__file__).parent / ".env")
 QUESTIONS = [
     "Are married people happier than single people?",
     "Why do Nordic countries top the happiness rankings?",
-    "Which daily activities feel most meaningful, and are they the same ones that feel good?",
+    "How much does seeing friends matter for happiness?",
 ]
 
 
