@@ -1,0 +1,114 @@
+{
+  "id": "marriage-and-happiness",
+  "question": "Are married people happier than single people?",
+  "title": "marriage & happiness",
+  "hook": "Does tying the knot correlate with reporting a happier life?",
+  "theme": "relationships",
+  "answer": "Married Americans are consistently more likely to report being very happy, with 39% doing so compared to 21% of those who never marry.",
+  "stats": [
+    {
+      "value": "39%",
+      "label": "of married people report being very happy"
+    },
+    {
+      "value": "21%",
+      "label": "of never-married people report being very happy"
+    },
+    {
+      "value": "15%",
+      "label": "of separated people report being very happy"
+    }
+  ],
+  "followups": [
+    "Has the share of married people in the US changed?",
+    "Does the marriage happiness gap differ for men and women?",
+    "How did overall self-reported happiness change in the 2020s?"
+  ],
+  "body": "## the marriage gap is wide and persistent\n\nIf you look at decades of survey data, married people are consistently the most likely to report being very happy (GSS 1972-2024). Specifically, **39%** of married Americans report being very happy, compared to only **21%** of those who have never been married (GSS 1972-2024). Meanwhile, only **15%** of separated individuals report the same, which is the lowest share among all marital groups (GSS 1972-2024).\n\n```chart\n{\"type\": \"bar\", \"title\": \"Married people are the most likely to report being very happy\", \"y_label\": \"share saying they are very happy\", \"unit\": \"%\", \"labels\": [\"Married\", \"Widowed\", \"Never married\", \"Divorced\", \"Separated\"], \"series\": [{\"name\": \"very happy\", \"data\": [39.1, 23.3, 20.8, 18.5, 15.3]}], \"highlight\": \"Married\", \"note\": \"Weighted shares, survey years 1972-2024.\"}\n```\n\n## a consistent divide across decades\n\nThis happiness divide has persisted for decades (GSS 1972-2024). In the 1970s, **41%** of married respondents reported being very happy compared to **21%** of never-married respondents (GSS 1972-2024). The gap narrowed slightly in the 1980s, when **39%** of married and **26%** of never-married individuals reported high happiness, but it remained stable through the 1990s, 2000s, and 2010s (GSS 1972-2024).\n\nWhile the happiness gap remained wide, the demographics shifted as the share of married respondents in the sample fell from **67%** in the 1970s to **51%** in 2024 (GSS 1972-2024).\n\n```chart\n{\"type\": \"line\", \"title\": \"The happiness gap has persisted for half a century\", \"y_label\": \"share saying they are very happy\", \"unit\": \"%\", \"labels\": [\"1970s\", \"1980s\", \"1990s\", \"2000s\", \"2010s\", \"2021\", \"2022\", \"2024\"], \"series\": [{\"name\": \"Married\", \"data\": [40.6, 39.3, 40.1, 42.1, 40.3, 27.5, 33.9, 32.3]}, {\"name\": \"Never married\", \"data\": [20.9, 26.1, 21.3, 22.4, 21.5, 9.7, 17.6, 13.8]}], \"note\": \"GSS data showing the drop in the 2020s.\"}\n```\n\n## the gap is nearly identical for men and women\n\nWhen you look at the difference between men and women, the dynamics are remarkably similar. Across all years, **40%** of married women report being very happy compared to **22%** of never-married women (GSS 1972-2024). For men, **38%** of those who are married report being very happy, compared to **20%** of those who never married (GSS 1972-2024).\n\nThis leaves a marriage happiness gap of about **18** percentage points for both sexes (GSS 1972-2024). Even as overall happiness fell after 2020, the gap between the married and unmarried barely budged, shrinking by less than **1** percentage point for both men and women (GSS 1972-2024).\n\n## what this data can't tell you\n\nThe dramatic drop in reported happiness in the 2020s comes with an important caveat. The survey shifted from in-person interviews to web-only and mixed-mode formats during this period. It is difficult to separate actual shifts in national mood from how people respond to different survey formats.",
+  "sources": [
+    "GSS"
+  ],
+  "trail": [
+    {
+      "agent": "Researcher 1",
+      "task": "In the GSS dataset, what is the weighted distribution of happiness (happy_label: very happy, pretty happy, not too happy) for each marital status (marital_label)? Please provide the percentages and raw sample sizes for each marital category.",
+      "queries": [
+        {
+          "sql": "SELECT marital_label, happy_label, COUNT(*), SUM(weight) \nFROM gss \nWHERE happy_label IS NOT NULL AND marital_label IS NOT NULL \nGROUP BY marital_label, happy_label \nORDER BY marital_label, happy_label",
+          "result": "| marital_label | happy_label | count_star() | sum(weight) |\n|---|---|---|---|\n| divorced | not too happy | 1983 | 1482.833 |\n| divorced | pretty happy | 5671 | 4278.343 |\n| divorced | very happy | 1746 | 1304.015 |\n| married | not too happy | 3039 | 3363.398 |\n| married | pretty happy | 19246 | 21268.409 |\n| married | very happy | 14290 | 15816.624 |\n| never married | not too happy | 3002 | 3038.270 |\n| never married | pretty happy | 9705 | 10279.193 |\n| never married | very happy | 3142 | 3503.691 |\n| separated | not too happy | 688 | 556.942 |\n| separated | pretty happy | 1318 | 1019.083 |\n| separated | very happy | 370 | 283.727 |\n| widowed | not too happy | 1372 | 983.413 |\n| widowed | pretty happy | 3732 | 2610.952 |\n| widowed | very happy | 1509 | 1092.086 |"
+        },
+        {
+          "sql": "SELECT \n    marital_label,\n    COUNT(*) AS total_sample_size,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'very happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_very_happy,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'pretty happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_pretty_happy,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'not too happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_not_too_happy\nFROM gss\nWHERE happy_label IS NOT NULL AND marital_label IS NOT NULL\nGROUP BY marital_label\nORDER BY pct_very_happy DESC;",
+          "result": "| marital_label | total_sample_size | pct_very_happy | pct_pretty_happy | pct_not_too_happy |\n|---|---|---|---|---|\n| married | 36575 | 39.100 | 52.580 | 8.320 |\n| widowed | 6613 | 23.300 | 55.710 | 20.980 |\n| never married | 15849 | 20.830 | 61.110 | 18.060 |\n| divorced | 9400 | 18.460 | 60.560 | 20.990 |\n| separated | 2376 | 15.260 | 54.800 | 29.950 |"
+        },
+        {
+          "sql": "SELECT \n    marital_label,\n    COUNT(*) AS total_sample_size,\n    SUM(CASE WHEN happy_label = 'very happy' THEN 1 ELSE 0 END) AS count_very_happy,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'very happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_very_happy,\n    SUM(CASE WHEN happy_label = 'pretty happy' THEN 1 ELSE 0 END) AS count_pretty_happy,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'pretty happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_pretty_happy,\n    SUM(CASE WHEN happy_label = 'not too happy' THEN 1 ELSE 0 END) AS count_not_too_happy,\n    ROUND(100.0 * SUM(CASE WHEN happy_label = 'not too happy' THEN weight ELSE 0 END) / SUM(weight), 2) AS pct_not_too_happy\nFROM gss\nWHERE happy_label IS NOT NULL AND marital_label IS NOT NULL\nGROUP BY marital_label\nORDER BY pct_very_happy DESC;",
+          "result": "| marital_label | total_sample_size | count_very_happy | pct_very_happy | count_pretty_happy | pct_pretty_happy | count_not_too_happy | pct_not_too_happy |\n|---|---|---|---|---|---|---|---|\n| married | 36575 | 14290 | 39.100 | 19246 | 52.580 | 3039 | 8.320 |\n| widowed | 6613 | 1509 | 23.300 | 3732 | 55.710 | 1372 | 20.980 |\n| never married | 15849 | 3142 | 20.830 | 9705 | 61.110 | 3002 | 18.060 |\n| divorced | 9400 | 1746 | 18.460 | 5671 | 60.560 | 1983 | 20.990 |\n| separated | 2376 | 370 | 15.260 | 1318 | 54.800 | 688 | 29.950 |"
+        }
+      ]
+    },
+    {
+      "agent": "Researcher 2",
+      "task": "In the GSS dataset, how has the weighted percentage of 'very happy' (happy = 1) respondents compared between married people (marital = 1) and never-married people (marital = 5) over time by decade (1970s, 1980s, 1990s, 2000s, 2010s, and 2020s)? Please include the years 2021, 2022, and 2024 separately or highlight them to account for the survey mode change.",
+      "queries": [
+        {
+          "sql": "SELECT DISTINCT year FROM gss ORDER BY year;",
+          "result": "| year |\n|---|\n| 1972 |\n| 1973 |\n| 1974 |\n| 1975 |\n| 1976 |\n| 1977 |\n| 1978 |\n| 1980 |\n| 1982 |\n| 1983 |\n| 1984 |\n| 1985 |\n| 1986 |\n| 1987 |\n| 1988 |\n| 1989 |\n| 1990 |\n| 1991 |\n| 1993 |\n| 1994 |\n| 1996 |\n| 1998 |\n| 2000 |\n| 2002 |\n| 2004 |\n| 2006 |\n| 2008 |\n| 2010 |\n| 2012 |\n| 2014 |\n| 2016 |\n| 2018 |\n| 2021 |\n| 2022 |\n| 2024 |"
+        },
+        {
+          "sql": "SELECT marital, marital_label, COUNT(*), SUM(weight) FROM gss GROUP BY marital, marital_label ORDER BY marital;",
+          "result": "| marital | marital_label | count_star() | sum(weight) |\n|---|---|---|---|\n| 1.000 | married | 38959 | 43141.072 |\n| 2.000 | widowed | 7005 | 4968.726 |\n| 3.000 | divorced | 10158 | 7648.821 |\n| 4.000 | separated | 2548 | 1993.704 |\n| 5.000 | never married | 16963 | 17893.930 |\n| NULL | NULL | 66 | 53.680 |"
+        },
+        {
+          "sql": "SELECT happy, happy_label, COUNT(*) FROM gss GROUP BY happy, happy_label ORDER BY happy;",
+          "result": "| happy | happy_label | count_star() |\n|---|---|---|\n| 1.000 | very happy | 21069 |\n| 2.000 | pretty happy | 39705 |\n| 3.000 | not too happy | 10095 |\n| NULL | NULL | 4830 |"
+        },
+        {
+          "sql": "WITH periods AS (\n    SELECT \n        CASE \n            WHEN year BETWEEN 1970 AND 1979 THEN '1970s'\n            WHEN year BETWEEN 1980 AND 1989 THEN '1980s'\n            WHEN year BETWEEN 1990 AND 1999 THEN '1990s'\n            WHEN year BETWEEN 2000 AND 2009 THEN '2000s'\n            WHEN year BETWEEN 2010 AND 2019 THEN '2010s'\n            WHEN year = 2021 THEN '2021'\n            WHEN year = 2022 THEN '2022'\n            WHEN year = 2024 THEN '2024'\n        END AS period,\n        year,\n        marital,\n        marital_label,\n        happy,\n        weight\n    FROM gss\n    WHERE happy IS NOT NULL AND marital IS NOT NULL AND marital IN (1, 5)\n)\nSELECT \n    period,\n    marital_label,\n    COUNT(*) AS sample_size,\n    SUM(weight) AS weighted_n,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 AS pct_very_happy\nFROM periods\nGROUP BY period, marital_label\nORDER BY \n    CASE \n        WHEN period = '1970s' THEN 1\n        WHEN period = '1980s' THEN 2\n        WHEN period = '1990s' THEN 3\n        WHEN period = '2000s' THEN 4\n        WHEN period = '2010s' THEN 5\n        WHEN period = '2021' THEN 6\n        WHEN period = '2022' THEN 7\n        WHEN period = '2024' THEN 8\n    END,\n    marital_label;\n",
+          "result": "| period | marital_label | sample_size | weighted_n | pct_very_happy |\n|---|---|---|---|---|\n| 1970s | married | 7195 | 7129.951 | 40.550 |\n| 1970s | never married | 1459 | 1909.512 | 20.919 |\n| 1980s | married | 7867 | 8608.974 | 39.292 |\n| 1980s | never married | 2615 | 2937.724 | 26.134 |\n| 1990s | married | 6632 | 7638.211 | 40.138 |\n| 1990s | never married | 2803 | 2865.258 | 21.313 |\n| 2000s | married | 4937 | 5734.656 | 42.105 |\n| 2000s | never married | 2630 | 2620.501 | 22.356 |\n| 2010s | married | 5142 | 5904.596 | 40.265 |\n| 2010s | never married | 3234 | 3292.096 | 21.471 |\n| 2021 | married | 1990 | 2006.082 | 27.457 |\n| 2021 | never married | 969 | 1160.627 | 9.736 |\n| 2022 | married | 1459 | 1764.021 | 33.867 |\n| 2022 | never married | 1089 | 1037.065 | 17.570 |\n| 2024 | married | 1353 | 1661.941 | 32.293 |\n| 2024 | never married | 1050 | 998.374 | 13.817 |\n\n(2 queries left.)"
+        },
+        {
+          "sql": "WITH periods AS (\n    SELECT \n        CASE \n            WHEN year BETWEEN 1970 AND 1979 THEN '1970s'\n            WHEN year BETWEEN 1980 AND 1989 THEN '1980s'\n            WHEN year BETWEEN 1990 AND 1999 THEN '1990s'\n            WHEN year BETWEEN 2000 AND 2009 THEN '2000s'\n            WHEN year BETWEEN 2010 AND 2019 THEN '2010s'\n            WHEN year = 2021 THEN '2021'\n            WHEN year = 2022 THEN '2022'\n            WHEN year = 2024 THEN '2024'\n        END AS period,\n        happy,\n        weight\n    FROM gss\n    WHERE happy IS NOT NULL\n)\nSELECT \n    period,\n    COUNT(*) AS total_sample_size,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 AS overall_pct_very_happy\nFROM periods\nGROUP BY period\nORDER BY \n    CASE \n        WHEN period = '1970s' THEN 1\n        WHEN period = '1980s' THEN 2\n        WHEN period = '1990s' THEN 3\n        WHEN period = '2000s' THEN 4\n        WHEN period = '2010s' THEN 5\n        WHEN period = '2021' THEN 6\n        WHEN period = '2022' THEN 7\n        WHEN period = '2024' THEN 8\n    END;",
+          "result": "| period | total_sample_size | overall_pct_very_happy |\n|---|---|---|\n| 1970s | 10614 | 34.081 |\n| 1980s | 14086 | 33.361 |\n| 1990s | 13134 | 32.095 |\n| 2000s | 10484 | 32.690 |\n| 2010s | 11736 | 30.766 |\n| 2021 | 4014 | 19.370 |\n| 2022 | 3520 | 24.751 |\n| 2024 | 3281 | 23.398 |\n\n(1 queries left.)"
+        },
+        {
+          "sql": "WITH periods AS (\n    SELECT \n        CASE \n            WHEN year BETWEEN 1970 AND 1979 THEN '1970s'\n            WHEN year BETWEEN 1980 AND 1989 THEN '1980s'\n            WHEN year BETWEEN 1990 AND 1999 THEN '1990s'\n            WHEN year BETWEEN 2000 AND 2009 THEN '2000s'\n            WHEN year BETWEEN 2010 AND 2019 THEN '2010s'\n            WHEN year = 2021 THEN '2021'\n            WHEN year = 2022 THEN '2022'\n            WHEN year = 2024 THEN '2024'\n        END AS period,\n        marital,\n        weight\n    FROM gss\n    WHERE marital IS NOT NULL\n)\nSELECT \n    period,\n    SUM(weight * (marital = 1)::INT) / SUM(weight) * 100 AS pct_married,\n    SUM(weight * (marital = 5)::INT) / SUM(weight) * 100 AS pct_never_married\nFROM periods\nGROUP BY period\nORDER BY \n    CASE \n        WHEN period = '1970s' THEN 1\n        WHEN period = '1980s' THEN 2\n        WHEN period = '1990s' THEN 3\n        WHEN period = '2000s' THEN 4\n        WHEN period = '2010s' THEN 5\n        WHEN period = '2021' THEN 6\n        WHEN period = '2022' THEN 7\n        WHEN period = '2024' THEN 8\n    END;",
+          "result": "| period | pct_married | pct_never_married |\n|---|---|---|\n| 1970s | 67.084 | 18.031 |\n| 1980s | 60.870 | 20.906 |\n| 1990s | 58.101 | 21.807 |\n| 2000s | 55.315 | 24.155 |\n| 2010s | 50.353 | 28.040 |\n| 2021 | 50.094 | 28.867 |\n| 2022 | 50.179 | 29.552 |\n| 2024 | 51.053 | 30.526 |\n\n(0 queries left.)"
+        }
+      ]
+    },
+    {
+      "agent": "Researcher 3",
+      "task": "In the GSS dataset, is the marriage happiness gap different for men vs women? Please provide the weighted percentage of 'very happy' (happy = 1) for married vs never-married respondents, broken down by sex (sex_label: male, female), across all years (and maybe split by pre-2020 vs post-2020 if there is a shift).",
+      "queries": [
+        {
+          "sql": "SELECT marital, marital_label, COUNT(*) FROM gss GROUP BY 1, 2 ORDER BY 1;",
+          "result": "| marital | marital_label | count_star() |\n|---|---|---|\n| 1.000 | married | 38959 |\n| 2.000 | widowed | 7005 |\n| 3.000 | divorced | 10158 |\n| 4.000 | separated | 2548 |\n| 5.000 | never married | 16963 |\n| NULL | NULL | 66 |"
+        },
+        {
+          "sql": "SELECT sex, sex_label, COUNT(*) FROM gss GROUP BY 1, 2 ORDER BY 1;",
+          "result": "| sex | sex_label | count_star() |\n|---|---|---|\n| 1.000 | male | 33444 |\n| 2.000 | female | 42124 |\n| NULL | NULL | 131 |"
+        },
+        {
+          "sql": "SELECT DISTINCT year FROM gss ORDER BY year DESC;",
+          "result": "| year |\n|---|\n| 2024 |\n| 2022 |\n| 2021 |\n| 2018 |\n| 2016 |\n| 2014 |\n| 2012 |\n| 2010 |\n| 2008 |\n| 2006 |\n| 2004 |\n| 2002 |\n| 2000 |\n| 1998 |\n| 1996 |\n| 1994 |\n| 1993 |\n| 1991 |\n| 1990 |\n| 1989 |\n| 1988 |\n| 1987 |\n| 1986 |\n| 1985 |\n| 1984 |\n| 1983 |\n| 1982 |\n| 1980 |\n| 1978 |\n| 1977 |\n| 1976 |\n| 1975 |\n| 1974 |\n| 1973 |\n| 1972 |"
+        },
+        {
+          "sql": "SELECT\n    CASE WHEN year < 2020 THEN 'Pre-2020' ELSE 'Post-2020 (2021-2024)' END AS period,\n    sex_label,\n    marital_label,\n    SUM(weight) as sample_weight_sum,\n    COUNT(*) as sample_count,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) AS pct_very_happy\nFROM gss\nWHERE happy IS NOT NULL\n  AND marital_label IN ('married', 'never married')\n  AND sex_label IS NOT NULL\nGROUP BY 1, 2, 3\nORDER BY 1, 2, 3;",
+          "result": "| period | sex_label | marital_label | sample_weight_sum | sample_count | pct_very_happy |\n|---|---|---|---|---|---|\n| Post-2020 (2021-2024) | female | married | 2510.022 | 2366 | 0.312 |\n| Post-2020 (2021-2024) | female | never married | 1554.879 | 1641 | 0.145 |\n| Post-2020 (2021-2024) | male | married | 2844.330 | 2375 | 0.307 |\n| Post-2020 (2021-2024) | male | never married | 1593.919 | 1429 | 0.128 |\n| Pre-2020 | female | married | 17632.562 | 16636 | 0.415 |\n| Pre-2020 | female | never married | 5974.573 | 6226 | 0.245 |\n| Pre-2020 | male | married | 17383.825 | 15137 | 0.392 |\n| Pre-2020 | male | never married | 7650.516 | 6515 | 0.210 |\n\n(2 queries left.)"
+        },
+        {
+          "sql": "SELECT\n    sex_label,\n    marital_label,\n    SUM(weight) as sample_weight_sum,\n    COUNT(*) as sample_count,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) AS pct_very_happy\nFROM gss\nWHERE happy IS NOT NULL\n  AND marital_label IN ('married', 'never married')\n  AND sex_label IS NOT NULL\nGROUP BY 1, 2\nORDER BY 1, 2;",
+          "result": "| sex_label | marital_label | sample_weight_sum | sample_count | pct_very_happy |\n|---|---|---|---|---|\n| female | married | 20142.584 | 19002 | 0.402 |\n| female | never married | 7529.452 | 7867 | 0.224 |\n| male | married | 20228.154 | 17512 | 0.380 |\n| male | never married | 9244.435 | 7944 | 0.196 |\n\n(1 queries left.)"
+        },
+        {
+          "sql": "SELECT\n    CASE \n        WHEN year < 1980 THEN '1970s'\n        WHEN year < 1990 THEN '1980s'\n        WHEN year < 2000 THEN '1990s'\n        WHEN year < 2010 THEN '2000s'\n        WHEN year < 2020 THEN '2010s'\n        ELSE '2020s (2021-2024)'\n    END AS decade,\n    sex_label,\n    marital_label,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) AS pct_very_happy,\n    COUNT(*) as sample_count\nFROM gss\nWHERE happy IS NOT NULL\n  AND marital_label IN ('married', 'never married')\n  AND sex_label IS NOT NULL\nGROUP BY 1, 2, 3\nORDER BY 1, 2, 3;",
+          "result": "| decade | sex_label | marital_label | pct_very_happy | sample_count |\n|---|---|---|---|---|\n| 1970s | female | married | 0.426 | 3711 |\n| 1970s | female | never married | 0.263 | 629 |\n| 1970s | male | married | 0.383 | 3484 |\n| 1970s | male | never married | 0.171 | 830 |\n| 1980s | female | married | 0.409 | 4139 |\n| 1980s | female | never married | 0.283 | 1253 |\n| 1980s | male | married | 0.376 | 3728 |\n| 1980s | male | never married | 0.245 | 1362 |\n| 1990s | female | married | 0.405 | 3476 |\n| 1990s | female | never married | 0.232 | 1397 |\n| 1990s | male | married | 0.398 | 3156 |\n| 1990s | male | never married | 0.198 | 1406 |\n| 2000s | female | married | 0.426 | 2585 |\n| 2000s | female | never married | 0.227 | 1300 |\n| 2000s | male | married | 0.416 | 2352 |\n| 2000s | male | never married | 0.221 | 1330 |\n| 2010s | female | married | 0.410 | 2725 |\n| 2010s | female | never married | 0.228 | 1647 |\n| 2010s | male | married | 0.395 | 2417 |\n| 2010s | male | never married | 0.204 | 1587 |\n| 2020s (2021-2024) | female | married | 0.312 | 2366 |\n| 2020s (2021-2024) | female | never married | 0.145 | 1641 |\n| 2020s (2021-2024) | male | married | 0.307 | 2375 |\n| 2020s (2021-2024) | male | never married | 0.128 | 1429 |\n\n(0 queries left.)"
+        }
+      ]
+    }
+  ],
+  "created": "2026-11-10",
+  "seconds": 152,
+  "number": 2
+}

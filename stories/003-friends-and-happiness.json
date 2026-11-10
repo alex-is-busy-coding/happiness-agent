@@ -1,0 +1,122 @@
+{
+  "id": "friends-and-happiness",
+  "question": "How much does seeing friends matter for happiness?",
+  "title": "friends & happiness",
+  "hook": "Is there such a thing as seeing your friends too much?",
+  "theme": "relationships",
+  "answer": "Moderate socializing goes with the highest happiness, as 33% of those who see friends several times a month report being very happy compared to 27% of daily socializers.",
+  "stats": [
+    {
+      "value": "33%",
+      "label": "of moderate socializers report being very happy"
+    },
+    {
+      "value": "27%",
+      "label": "of daily socializers say they are very happy"
+    },
+    {
+      "value": "21%",
+      "label": "of those who never socialize are not too happy"
+    }
+  ],
+  "followups": [
+    "Has the pandemic permanently changed how often we see friends?",
+    "Do older men benefit more from socializing than older women?",
+    "Why did young adults experience the steepest decline in socializing?"
+  ],
+  "body": "## more is not always better\n\nWe often think that socializing as much as possible is the key to happiness, but the data suggests a sweet spot. Moderate socialization goes with the highest self-reported happiness (GSS 1974-2024). Among those who socialize several times a month, **33%** report being very happy, while only 10% say they are not too happy (GSS 1974-2024).\n\nIf you see friends almost daily, that number actually slips (GSS 1974-2024). Only **27%** of daily socializers report being very happy, which is exactly the same share as those who never socialize at all (GSS 1974-2024). However, those who are completely isolated have it the hardest, with 21% reporting they are not too happy (GSS 1974-2024).\n\n```chart\n{\"type\": \"bar\", \"title\": \"Moderate socializing goes with the highest happiness\", \"y_label\": \"share saying they are very happy\", \"unit\": \"%\", \"labels\": [\"Almost daily\", \"Once or twice a week\", \"Several times a month\", \"About once a month\", \"Several times a year\", \"About once a year\", \"Never\"], \"series\": [{\"name\": \"very happy\", \"data\": [26.6, 30.1, 32.8, 32.3, 31.1, 27.2, 26.6]}], \"highlight\": \"Several times a month\", \"note\": \"Weighted shares of GSS respondents, 1974-2024.\"}\n```\n\n## seeing friends has plummeted recently\n\nOur social lives have shifted dramatically over the decades. Socializing with friends remained stable for a long time, but it has fallen off a cliff in the 2020s (GSS 1974-2024). In the 1970s, **23%** of people socialized with friends at least weekly, but that share sank to just 16% in the 2020s (GSS 1974-2024).\n\nThis decline is especially steep among young adults under age 30, whose frequent socializing fell from a peak of **68%** in the 2000s to 54% in the 2020s (GSS 1974-2024). Seniors aged 60 and older also saw their frequent socializing decline, dropping to **25%** in the 2020s (GSS 1974-2024).\n\n```chart\n{\"type\": \"line\", \"title\": \"Socializing at least weekly fell sharply in the 2020s\", \"y_label\": \"percent socializing at least weekly\", \"unit\": \"%\", \"labels\": [\"1970s\", \"1980s\", \"1990s\", \"2000s\", \"2010s\", \"2020s\"], \"series\": [{\"name\": \"At least weekly\", \"data\": [23.3, 22.7, 23.6, 23.3, 21.2, 15.6]}], \"note\": \"Weekly socializing includes almost daily and once or twice a week.\"}\n```\n\n## a male aggregate illusion\n\nWhen you look at men of all ages combined, a strange pattern appears where frequent socializers seem slightly less happy than infrequent ones (GSS 1974-2024). For men, **29%** of frequent socializers report being very happy, compared to 30% of those who socialize less often (GSS 1974-2024). Yet this aggregate gap is a statistical illusion of age composition (GSS 1974-2024).\n\nOlder men are much happier on average but socialize far less frequently, with only 26% of senior men socializing frequently compared to 66% of young men (GSS 1974-2024). Within every single age group, frequent socializing is linked to equal or higher happiness for men (GSS 1974-2024). Among seniors aged 65 and older, frequent socializing is linked to **42%** of men reporting they are very happy, compared to 36% of infrequent socializers (GSS 1974-2024).\n\n```chart\n{\"type\": \"bar\", \"title\": \"Men show a strong socializing happiness gap in their later years\", \"y_label\": \"percent very happy\", \"unit\": \"%\", \"labels\": [\"18-29\", \"30-49\", \"50-64\", \"65+\"], \"series\": [{\"name\": \"Frequent (1-3)\", \"data\": [24.9, 29.2, 31.3, 42.0]}, {\"name\": \"Infrequent (4-7)\", \"data\": [24.4, 29.0, 31.2, 36.0]}], \"highlight\": \"65+\", \"note\": \"Frequent socializing includes almost daily, weekly, or several times a month.\"}\n```\n\n## midlife peaks for women\n\nWomen show a completely different pattern across their lives, with the happiness gap of socializing peaking sharply during midlife (GSS 1974-2024). For women aged 50 to 64, frequent socializers have a massive lead, with **38%** reporting they are very happy compared to only 29% of infrequent socializers (GSS 1974-2024).\n\nFor other age cohorts of women, the difference is almost non-existent (GSS 1974-2024). Among young women, the gap is virtually flat, and for senior women over 65, frequent socializers are only **33%** very happy compared to 32% of infrequent ones (GSS 1974-2024).\n\n```chart\n{\"type\": \"bar\", \"title\": \"Women experience the largest socializing happiness gap in midlife\", \"y_label\": \"percent very happy\", \"unit\": \"%\", \"labels\": [\"18-29\", \"30-49\", \"50-64\", \"65+\"], \"series\": [{\"name\": \"Frequent (1-3)\", \"data\": [29.5, 34.1, 37.8, 33.2]}, {\"name\": \"Infrequent (4-7)\", \"data\": [30.1, 30.6, 29.1, 32.3]}], \"highlight\": \"50-64\", \"note\": \"Frequent socializing includes almost daily, weekly, or several times a month.\"}\n```\n\n## what this data can't tell you\n\nWhile these patterns are striking, they come with a few notable limits. The GSS only asked this socializing question in 29 select survey years over a fifty-year period. Additionally, the survey shifted from in-person interviews to web-based and mixed modes starting in 2021. This transition means the sudden drop in reported happiness may partly reflect the new administration method rather than real-world changes.",
+  "sources": [
+    "GSS"
+  ],
+  "trail": [
+    {
+      "agent": "Researcher 1",
+      "task": "In the GSS, what is the weighted percentage of respondents who are 'very happy' (happy=1) and 'not too happy' (happy=3) for each category of frequency of socializing with friends (socfrend)? Please provide the labels for socfrend and the total weighted count/sample size for each.",
+      "queries": [
+        {
+          "sql": "SELECT\n    socfrend,\n    socfrend_label,\n    COUNT(*) as raw_count,\n    SUM(weight) as weighted_count,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) as pct_very_happy,\n    SUM(weight * (happy = 3)::INT) / SUM(weight) as pct_not_too_happy\nFROM gss\nWHERE happy IS NOT NULL AND socfrend IS NOT NULL\nGROUP BY socfrend, socfrend_label\nORDER BY socfrend;",
+          "result": "| socfrend | socfrend_label | raw_count | weighted_count | pct_very_happy | pct_not_too_happy |\n|---|---|---|---|---|---|\n| 1.000 | almost daily | 1341 | 1579.556 | 0.266 | 0.131 |\n| 2.000 | once or twice a week | 7984 | 8190.730 | 0.301 | 0.116 |\n| 3.000 | several times a month | 9010 | 8951.817 | 0.328 | 0.098 |\n| 4.000 | about once a month | 9832 | 9811.886 | 0.323 | 0.101 |\n| 5.000 | several times a year | 8686 | 8675.849 | 0.311 | 0.113 |\n| 6.000 | about once a year | 3495 | 3472.270 | 0.272 | 0.152 |\n| 7.000 | never | 4711 | 4457.522 | 0.266 | 0.211 |"
+        },
+        {
+          "sql": "SELECT MIN(year), MAX(year), COUNT(DISTINCT year)\nFROM gss\nWHERE happy IS NOT NULL AND socfrend IS NOT NULL;",
+          "result": "| min(\"year\") | max(\"year\") | count(DISTINCT \"year\") |\n|---|---|---|\n| 1974 | 2024 | 29 |"
+        },
+        {
+          "sql": "SELECT\n    CASE WHEN age < 30 THEN 'Under 30'\n         WHEN age >= 30 AND age < 60 THEN '30-59'\n         ELSE '60+' END as age_group,\n    socfrend,\n    socfrend_label,\n    COUNT(*) as raw_count,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) as pct_very_happy,\n    SUM(weight * (happy = 3)::INT) / SUM(weight) as pct_not_too_happy\nFROM gss\nWHERE happy IS NOT NULL AND socfrend IS NOT NULL AND age IS NOT NULL\nGROUP BY age_group, socfrend, socfrend_label\nORDER BY age_group, socfrend;",
+          "result": "| age_group | socfrend | socfrend_label | raw_count | pct_very_happy | pct_not_too_happy |\n|---|---|---|---|---|---|\n| 30-59 | 1.000 | almost daily | 432 | 0.311 | 0.170 |\n| 30-59 | 2.000 | once or twice a week | 3911 | 0.310 | 0.112 |\n| 30-59 | 3.000 | several times a month | 4982 | 0.336 | 0.097 |\n| 30-59 | 4.000 | about once a month | 5738 | 0.328 | 0.093 |\n| 30-59 | 5.000 | several times a year | 5076 | 0.302 | 0.108 |\n| 30-59 | 6.000 | about once a year | 1899 | 0.265 | 0.165 |\n| 30-59 | 7.000 | never | 1987 | 0.236 | 0.235 |\n| 60+ | 1.000 | almost daily | 149 | 0.302 | 0.058 |\n| 60+ | 2.000 | once or twice a week | 1450 | 0.371 | 0.105 |\n| 60+ | 3.000 | several times a month | 1751 | 0.368 | 0.091 |\n| 60+ | 4.000 | about once a month | 2335 | 0.363 | 0.091 |\n| 60+ | 5.000 | several times a year | 2601 | 0.351 | 0.096 |\n| 60+ | 6.000 | about once a year | 1213 | 0.298 | 0.132 |\n| 60+ | 7.000 | never | 2185 | 0.295 | 0.191 |\n| Under 30 | 1.000 | almost daily | 748 | 0.242 | 0.127 |\n| Under 30 | 2.000 | once or twice a week | 2552 | 0.265 | 0.125 |\n| Under 30 | 3.000 | several times a month | 2180 | 0.289 | 0.102 |\n| Under 30 | 4.000 | about once a month | 1641 | 0.272 | 0.130 |\n| Under 30 | 5.000 | several times a year | 870 | 0.286 | 0.170 |\n| Under 30 | 6.000 | about once a year | 323 | 0.262 | 0.139 |\n| Under 30 | 7.000 | never | 481 | 0.269 | 0.196 |"
+        },
+        {
+          "sql": "SELECT\n    CASE WHEN year >= 2021 THEN '2021-2024' ELSE 'Pre-2021' END as era,\n    SUM(weight) as weighted_count,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) as pct_very_happy,\n    SUM(weight * (happy = 3)::INT) / SUM(weight) as pct_not_too_happy\nFROM gss\nWHERE happy IS NOT NULL AND socfrend IS NOT NULL\nGROUP BY era;",
+          "result": "| era | weighted_count | pct_very_happy | pct_not_too_happy |\n|---|---|---|---|\n| Pre-2021 | 37921.354 | 0.322 | 0.108 |\n| 2021-2024 | 7218.276 | 0.221 | 0.190 |\n\n(2 queries left.)"
+        }
+      ]
+    },
+    {
+      "agent": "Researcher 2",
+      "task": "In the GSS, how has the weighted distribution of socializing with friends (socfrend) changed over time by decade (1970s, 1980s, 1990s, 2000s, 2010s, 2020s)? Provide the percentage who socialize with friends at least weekly (socfrend categories 1, 2, 3) vs less often.",
+      "queries": [
+        {
+          "sql": "SELECT socfrend, socfrend_label, COUNT(*) FROM gss WHERE socfrend IS NOT NULL GROUP BY socfrend, socfrend_label ORDER BY socfrend",
+          "result": "| socfrend | socfrend_label | count_star() |\n|---|---|---|\n| 1.000 | almost daily | 1347 |\n| 2.000 | once or twice a week | 8036 |\n| 3.000 | several times a month | 9065 |\n| 4.000 | about once a month | 9877 |\n| 5.000 | several times a year | 8721 |\n| 6.000 | about once a year | 3514 |\n| 7.000 | never | 4734 |"
+        },
+        {
+          "sql": "SELECT \n    (floor(year / 10) * 10)::INT AS decade,\n    MIN(year) as min_year,\n    MAX(year) as max_year,\n    COUNT(*) as total_respondents,\n    SUM(weight) as total_weight\nFROM gss \nWHERE socfrend IS NOT NULL\nGROUP BY decade\nORDER BY decade",
+          "result": "| decade | min_year | max_year | total_respondents | total_weight |\n|---|---|---|---|---|\n| 1970 | 1974 | 1978 | 6012 | 6014.026 |\n| 1980 | 1982 | 1989 | 8424 | 8436.959 |\n| 1990 | 1990 | 1998 | 8797 | 8818.835 |\n| 2000 | 2000 | 2008 | 6986 | 6994.902 |\n| 2010 | 2010 | 2018 | 7842 | 7830.187 |\n| 2020 | 2021 | 2024 | 7233 | 7269.112 |"
+        },
+        {
+          "sql": "SELECT \n    (floor(year / 10) * 10)::INT AS decade,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2, 3))::INT) / SUM(weight), 2) AS weekly_or_more_user_def, -- categories 1, 2, 3\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2))::INT) / SUM(weight), 2) AS actual_at_least_weekly, -- categories 1, 2\n    ROUND(100 * SUM(weight * (socfrend = 1)::INT) / SUM(weight), 2) AS daily_share,\n    ROUND(100 * SUM(weight * (socfrend = 2)::INT) / SUM(weight), 2) AS weekly_share,\n    ROUND(100 * SUM(weight * (socfrend = 3)::INT) / SUM(weight), 2) AS several_times_month,\n    ROUND(100 * SUM(weight * (socfrend = 4)::INT) / SUM(weight), 2) AS once_month,\n    ROUND(100 * SUM(weight * (socfrend = 5)::INT) / SUM(weight), 2) AS several_times_year,\n    ROUND(100 * SUM(weight * (socfrend = 6)::INT) / SUM(weight), 2) AS once_year,\n    ROUND(100 * SUM(weight * (socfrend = 7)::INT) / SUM(weight), 2) AS never_share,\n    SUM(weight) AS total_weighted_n\nFROM gss \nWHERE socfrend IS NOT NULL\nGROUP BY decade\nORDER BY decade",
+          "result": "| decade | weekly_or_more_user_def | actual_at_least_weekly | daily_share | weekly_share | several_times_month | once_month | several_times_year | once_year | never_share | total_weighted_n |\n|---|---|---|---|---|---|---|---|---|---|---|\n| 1970 | 42.240 | 23.290 | 3.300 | 19.990 | 18.960 | 20.430 | 18.770 | 7.630 | 10.930 | 6014.026 |\n| 1980 | 42.430 | 22.690 | 3.430 | 19.260 | 19.730 | 22.510 | 18.400 | 7.020 | 9.640 | 8436.959 |\n| 1990 | 43.590 | 23.600 | 3.630 | 19.970 | 19.990 | 21.930 | 18.540 | 6.840 | 9.090 | 8818.835 |\n| 2000 | 43.530 | 23.270 | 4.390 | 18.880 | 20.250 | 22.330 | 17.410 | 7.530 | 9.200 | 6994.902 |\n| 2010 | 42.230 | 21.160 | 3.540 | 17.620 | 21.080 | 23.060 | 17.910 | 7.870 | 8.920 | 7830.187 |\n| 2020 | 34.410 | 15.640 | 2.610 | 13.030 | 18.770 | 19.730 | 24.390 | 9.560 | 11.900 | 7269.112 |"
+        },
+        {
+          "sql": "SELECT \n    year,\n    COUNT(*) as total_n,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2, 3))::INT) / SUM(weight), 2) AS cat_1_2_3,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2))::INT) / SUM(weight), 2) AS cat_1_2,\n    ROUND(100 * SUM(weight * (socfrend = 7)::INT) / SUM(weight), 2) AS never\nFROM gss \nWHERE socfrend IS NOT NULL AND year >= 2010\nGROUP BY year\nORDER BY year",
+          "result": "| year | total_n | cat_1_2_3 | cat_1_2 | never |\n|---|---|---|---|---|\n| 2010 | 1425 | 44.570 | 24.420 | 9.460 |\n| 2012 | 1299 | 44.530 | 23.880 | 9.120 |\n| 2014 | 1675 | 42.830 | 21.150 | 8.570 |\n| 2016 | 1886 | 39.990 | 18.900 | 8.040 |\n| 2018 | 1557 | 40.220 | 18.600 | 9.710 |\n| 2021 | 2701 | 28.740 | 11.780 | 13.350 |\n| 2022 | 2366 | 38.990 | 18.860 | 11.810 |\n| 2024 | 2166 | 36.440 | 16.930 | 10.190 |\n\n(2 queries left.)"
+        },
+        {
+          "sql": "SELECT \n    (floor(year / 10) * 10)::INT AS decade,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2, 3))::INT) / SUM(weight), 2) AS youth_cat_1_2_3 (age < 30),\n    ROUND(100 * SUM(weight * (CASE WHEN age >= 60 THEN socfrend IN (1, 2, 3) ELSE NULL END)::INT) / SUM(weight * (age >= 60)::INT), 2) AS seniors_cat_1_2_3,\n    ROUND(100 * SUM(weight * (CASE WHEN age < 30 THEN socfrend IN (1, 2, 3) ELSE NULL END)::INT) / SUM(weight * (age < 30)::INT), 2) AS youth_cat_1_2_3_v2\nFROM gss \nWHERE socfrend IS NOT NULL AND age IS NOT NULL\nGROUP BY decade\nORDER BY decade",
+          "result": "Query failed: ParserException: Parser Error: syntax error at or near \"(\"\n\nLINE 3: ... IN (1, 2, 3))::INT) / SUM(weight), 2) AS youth_cat_1_2_3 (age < 30),\n                                                                     ^"
+        },
+        {
+          "sql": "SELECT \n    (floor(year / 10) * 10)::INT AS decade,\n    ROUND(100 * SUM(weight * (CASE WHEN age < 30 THEN (socfrend IN (1, 2, 3))::INT ELSE NULL END)) / SUM(weight * (age < 30)::INT), 2) AS youth_cat_1_2_3,\n    ROUND(100 * SUM(weight * (CASE WHEN age >= 60 THEN (socfrend IN (1, 2, 3))::INT ELSE NULL END)) / SUM(weight * (age >= 60)::INT), 2) AS seniors_cat_1_2_3\nFROM gss \nWHERE socfrend IS NOT NULL AND age IS NOT NULL\nGROUP BY decade\nORDER BY decade",
+          "result": "| decade | youth_cat_1_2_3 | seniors_cat_1_2_3 |\n|---|---|---|\n| 1970 | 63.780 | 24.560 |\n| 1980 | 62.570 | 25.950 |\n| 1990 | 66.690 | 29.530 |\n| 2000 | 67.710 | 31.170 |\n| 2010 | 65.900 | 29.470 |\n| 2020 | 54.350 | 25.480 |\n\n(1 queries left.)"
+        },
+        {
+          "sql": "SELECT \n    (floor(year / 10) * 10)::INT AS decade,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2, 3))::INT) / SUM(weight), 2) AS pct_at_least_weekly_user_def,\n    ROUND(100 * SUM(weight * (socfrend NOT IN (1, 2, 3))::INT) / SUM(weight), 2) AS pct_less_often_user_def,\n    ROUND(100 * SUM(weight * (socfrend IN (1, 2))::INT) / SUM(weight), 2) AS pct_literal_at_least_weekly,\n    ROUND(100 * SUM(weight * (socfrend NOT IN (1, 2))::INT) / SUM(weight), 2) AS pct_literal_less_often,\n    COUNT(*) AS total_respondents,\n    SUM(weight) AS total_weighted\nFROM gss \nWHERE socfrend IS NOT NULL\nGROUP BY decade\nORDER BY decade",
+          "result": "| decade | pct_at_least_weekly_user_def | pct_less_often_user_def | pct_literal_at_least_weekly | pct_literal_less_often | total_respondents | total_weighted |\n|---|---|---|---|---|---|---|\n| 1970 | 42.240 | 57.760 | 23.290 | 76.710 | 6012 | 6014.026 |\n| 1980 | 42.430 | 57.570 | 22.690 | 77.310 | 8424 | 8436.959 |\n| 1990 | 43.590 | 56.410 | 23.600 | 76.400 | 8797 | 8818.835 |\n| 2000 | 43.530 | 56.470 | 23.270 | 76.730 | 6986 | 6994.902 |\n| 2010 | 42.230 | 57.770 | 21.160 | 78.840 | 7842 | 7830.187 |\n| 2020 | 34.410 | 65.590 | 15.640 | 84.360 | 7233 | 7269.112 |\n\n(0 queries left.)"
+        }
+      ]
+    },
+    {
+      "agent": "Researcher 3",
+      "task": "In the GSS, does the relationship between socializing with friends (socfrend) and happiness (happy) vary significantly by age groups (e.g., 18-29, 30-49, 50-64, 65+) or by sex? Provide the weighted percentage of 'very happy' respondents for frequent socializers (socfrend 1-3) vs infrequent socializers (socfrend 4-7) within these groups.",
+      "queries": [
+        {
+          "sql": "SELECT \n    socfrend, \n    socfrend_label, \n    COUNT(*) as count\nFROM gss \nWHERE socfrend IS NOT NULL \nGROUP BY 1, 2 \nORDER BY 1;",
+          "result": "| socfrend | socfrend_label | count |\n|---|---|---|\n| 1.000 | almost daily | 1347 |\n| 2.000 | once or twice a week | 8036 |\n| 3.000 | several times a month | 9065 |\n| 4.000 | about once a month | 9877 |\n| 5.000 | several times a year | 8721 |\n| 6.000 | about once a year | 3514 |\n| 7.000 | never | 4734 |"
+        },
+        {
+          "sql": "SELECT \n    happy, \n    happy_label, \n    COUNT(*) as count\nFROM gss \nWHERE happy IS NOT NULL \nGROUP BY 1, 2 \nORDER BY 1;",
+          "result": "| happy | happy_label | count |\n|---|---|---|\n| 1.000 | very happy | 21069 |\n| 2.000 | pretty happy | 39705 |\n| 3.000 | not too happy | 10095 |"
+        },
+        {
+          "sql": "SELECT \n    CASE \n        WHEN age BETWEEN 18 AND 29 THEN '18-29'\n        WHEN age BETWEEN 30 AND 49 THEN '30-49'\n        WHEN age BETWEEN 50 AND 64 THEN '50-64'\n        WHEN age >= 65 THEN '65+'\n    END as age_group,\n    CASE \n        WHEN socfrend BETWEEN 1 AND 3 THEN 'Frequent (1-3)'\n        WHEN socfrend BETWEEN 4 AND 7 THEN 'Infrequent (4-7)'\n    END as social_freq,\n    SUM(weight) as total_weight,\n    COUNT(*) as sample_size,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 as pct_very_happy\nFROM gss\nWHERE happy IS NOT NULL \n  AND socfrend IS NOT NULL \n  AND age IS NOT NULL\nGROUP BY 1, 2\nORDER BY 1, 2;",
+          "result": "| age_group | social_freq | total_weight | sample_size | pct_very_happy |\n|---|---|---|---|---|\n| 18-29 | Frequent (1-3) | 6916.338 | 5480 | 27.072 |\n| 18-29 | Infrequent (4-7) | 3934.535 | 3315 | 27.443 |\n| 30-49 | Frequent (1-3) | 6522.800 | 7016 | 31.745 |\n| 30-49 | Infrequent (4-7) | 9945.817 | 10126 | 29.883 |\n| 50-64 | Frequent (1-3) | 3015.943 | 3243 | 34.847 |\n| 50-64 | Infrequent (4-7) | 6629.442 | 6688 | 30.117 |\n| 65+ | Frequent (1-3) | 2082.953 | 2416 | 36.986 |\n| 65+ | Infrequent (4-7) | 5550.291 | 6220 | 34.048 |"
+        },
+        {
+          "sql": "SELECT \n    sex_label as sex,\n    CASE \n        WHEN socfrend BETWEEN 1 AND 3 THEN 'Frequent (1-3)'\n        WHEN socfrend BETWEEN 4 AND 7 THEN 'Infrequent (4-7)'\n    END as social_freq,\n    SUM(weight) as total_weight,\n    COUNT(*) as sample_size,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 as pct_very_happy\nFROM gss\nWHERE happy IS NOT NULL \n  AND socfrend IS NOT NULL \n  AND sex_label IS NOT NULL\nGROUP BY 1, 2\nORDER BY 1, 2;",
+          "result": "| sex | social_freq | total_weight | sample_size | pct_very_happy |\n|---|---|---|---|---|\n| female | Frequent (1-3) | 9526.931 | 10143 | 33.039 |\n| female | Infrequent (4-7) | 13873.128 | 15037 | 30.341 |\n| male | Frequent (1-3) | 9154.070 | 8169 | 29.063 |\n| male | Infrequent (4-7) | 12485.958 | 11632 | 30.325 |\n\n(2 queries left.)"
+        },
+        {
+          "sql": "SELECT \n    sex_label as sex,\n    CASE \n        WHEN age BETWEEN 18 AND 29 THEN '18-29'\n        WHEN age BETWEEN 30 AND 49 THEN '30-49'\n        WHEN age BETWEEN 50 AND 64 THEN '50-64'\n        WHEN age >= 65 THEN '65+'\n    END as age_group,\n    CASE \n        WHEN socfrend BETWEEN 1 AND 3 THEN 'Frequent (1-3)'\n        WHEN socfrend BETWEEN 4 AND 7 THEN 'Infrequent (4-7)'\n    END as social_freq,\n    SUM(weight) as total_weight,\n    COUNT(*) as sample_size,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 as pct_very_happy\nFROM gss\nWHERE happy IS NOT NULL \n  AND socfrend IS NOT NULL \n  AND sex_label IS NOT NULL\n  AND age IS NOT NULL\nGROUP BY 1, 2, 3\nORDER BY 1, 2, 3;",
+          "result": "| sex | age_group | social_freq | total_weight | sample_size | pct_very_happy |\n|---|---|---|---|---|---|\n| female | 18-29 | Frequent (1-3) | 3251.414 | 2828 | 29.549 |\n| female | 18-29 | Infrequent (4-7) | 2089.727 | 1972 | 30.104 |\n| female | 30-49 | Frequent (1-3) | 3380.771 | 3845 | 34.090 |\n| female | 30-49 | Infrequent (4-7) | 5351.610 | 5694 | 30.598 |\n| female | 50-64 | Frequent (1-3) | 1625.329 | 1875 | 37.849 |\n| female | 50-64 | Infrequent (4-7) | 3360.962 | 3632 | 29.103 |\n| female | 65+ | Frequent (1-3) | 1194.025 | 1501 | 33.230 |\n| female | 65+ | Infrequent (4-7) | 2896.387 | 3544 | 32.286 |\n| male | 18-29 | Frequent (1-3) | 3664.515 | 2651 | 24.878 |\n| male | 18-29 | Infrequent (4-7) | 1843.700 | 1341 | 24.443 |\n| male | 30-49 | Frequent (1-3) | 3142.029 | 3171 | 29.223 |\n| male | 30-49 | Infrequent (4-7) | 4590.926 | 4427 | 29.035 |\n| male | 50-64 | Frequent (1-3) | 1390.247 | 1367 | 31.346 |\n| male | 50-64 | Infrequent (4-7) | 3264.504 | 3052 | 31.161 |\n| male | 65+ | Frequent (1-3) | 888.928 | 915 | 42.031 |\n| male | 65+ | Infrequent (4-7) | 2653.303 | 2674 | 35.972 |\n\n(1 queries left.)"
+        },
+        {
+          "sql": "SELECT \n    MIN(year) as min_year, \n    MAX(year) as max_year, \n    COUNT(DISTINCT year) as distinct_years \nFROM gss \nWHERE socfrend IS NOT NULL;",
+          "result": "| min_year | max_year | distinct_years |\n|---|---|---|\n| 1974 | 2024 | 29 |\n\n(0 queries left.)"
+        }
+      ]
+    }
+  ],
+  "created": "2026-11-10",
+  "seconds": 115,
+  "number": 3
+}

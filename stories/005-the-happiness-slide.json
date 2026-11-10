@@ -1,0 +1,73 @@
+{
+  "id": "the-happiness-slide",
+  "question": "Are Americans getting less happy over time?",
+  "title": "the happiness slide",
+  "hook": "Is the nation actually getting gloomier, or is it just a temporary dip?",
+  "theme": "time",
+  "answer": "American happiness has declined over the long term, with the share of very happy adults reaching a record low of 19% in recent years.",
+  "stats": [
+    {
+      "value": "19%",
+      "label": "of adults who reported being very happy in 2021"
+    },
+    {
+      "value": "6.7",
+      "label": "out of 10 for the 2024 US life evaluation"
+    },
+    {
+      "value": "20%",
+      "label": "of adults reporting they were not too happy in 2024"
+    }
+  ],
+  "followups": [
+    "How does age affect these changing happiness levels?",
+    "Does higher income buffer against declining national happiness?",
+    "How does marital status correlate with self-reported happiness?"
+  ],
+  "body": "## the steady years are gone\n\nFor nearly forty years, self-reported happiness in the United States stayed remarkably steady (GSS 1972-2024). From the 1970s through the 2000s, about a third of adults reported being very happy, while only around 11% to 12% said they were not too happy (GSS 1972-2024). The 2010s brought a small downward shift, with the share of very happy people dipping to **31%** (GSS 1972-2024).\n\n```chart\n{\"type\": \"bar\", \"title\": \"Very happy responses dipped slightly in the 2010s\", \"y_label\": \"share saying they are very happy\", \"unit\": \"%\", \"labels\": [\"1970s\", \"1980s\", \"1990s\", \"2000s\", \"2010s\"], \"series\": [{\"name\": \"very happy\", \"data\": [34.1, 33.4, 32.1, 32.7, 30.8]}], \"highlight\": \"2010s\", \"note\": \"Weighted shares by decade.\"}\n```\n\n## a sudden shift in the twenties\n\nThe landscape of American contentment changed abruptly after 2018 (GSS 1972-2024). In 2021, the share of very happy adults fell to an all-time low of **19%** (GSS 1972-2024). Meanwhile, those reporting they were not too happy nearly doubled from their 2018 levels, reaching 24% (GSS 1972-2024).\n\nYou can see a partial rebound in the years that followed, though happiness remains low compared to the historical average (GSS 1972-2024). By 2024, the share of very happy adults was 23%, while 20% reported being not too happy (GSS 1972-2024). Throughout these shifts, the quiet majority of Americans consistently reported being pretty happy, hovering around **56%** in 2024 (GSS 1972-2024).\n\n```chart\n{\"type\": \"line\", \"title\": \"American happiness crashed in 2021 before a partial recovery\", \"y_label\": \"share of responses\", \"unit\": \"%\", \"labels\": [\"2016\", \"2018\", \"2021\", \"2022\", \"2024\"], \"series\": [{\"name\": \"Very happy\", \"data\": [30.4, 31.5, 19.4, 24.8, 23.4]}, {\"name\": \"Not too happy\", \"data\": [14.7, 12.7, 23.8, 20.3, 20.4]}], \"note\": \"GSS survey mode changed from in-person to web in 2021.\"}\n```\n\n## how the world ranks us\n\nThis downward trajectory is also visible on the global stage (WHR 2026). In 2011, the United States recorded its peak life evaluation score of 7.3, ranking 11th in the world (WHR 2026). Since then, scores have drifted downward, hitting a historic low of **6.7** and a rank of 24th in 2024 (WHR 2026).\n\nA tiny recovery appeared in 2025, with the national evaluation score edging up to **6.8** and the rank reaching 23rd (WHR 2026). Interestingly, during the first two years of the COVID-19 pandemic, scores remained relatively stable compared to the years right before it (WHR 2026). In 2021, the US score was 7.0, which put the country in 16th place globally (WHR 2026).\n\n```chart\n{\"type\": \"line\", \"title\": \"US life evaluation scores have slid since 2011\", \"y_label\": \"average life evaluation score\", \"unit\": \"\", \"labels\": [\"2011\", \"2012\", \"2014\", \"2015\", \"2016\", \"2017\", \"2018\", \"2019\", \"2020\", \"2021\", \"2022\", \"2023\", \"2024\", \"2025\"], \"series\": [{\"name\": \"Score\", \"data\": [7.3, 7.1, 7.1, 7.1, 7.0, 6.9, 6.9, 6.9, 7.0, 7.0, 6.9, 6.7, 6.7, 6.8]}], \"note\": \"WHR data was not collected in 2013.\"}\n```\n\n## what this data can't tell you\n\nWhile these trends paint a clear picture of decline, some details remain out of reach. For one, the global happiness dataset contains no information for any country in the year 2013, creating a gap in the timeline. Furthermore, the dramatic drop in American happiness between 2018 and 2021 might be exaggerated by a shift in how the survey was conducted. The sudden move from face-to-face interviews to online and mixed-mode surveys during the pandemic makes it hard to separate real-world anxiety from a change in how people answer questions.",
+  "sources": [
+    "GSS",
+    "WHR"
+  ],
+  "trail": [
+    {
+      "agent": "Researcher 1",
+      "task": "Calculate the weighted percentage of US adults in the gss dataset who reported being 'very happy' (happy=1), 'pretty happy' (happy=2), and 'not too happy' (happy=3), aggregated by decade (1970s, 1980s, 1990s, 2000s, 2010s) and individually for the recent years 2016, 2018, 2021, 2022, and 2024.",
+      "queries": [
+        {
+          "sql": "SELECT \n    CASE \n        WHEN year BETWEEN 1970 AND 1979 THEN '1970s'\n        WHEN year BETWEEN 1980 AND 1989 THEN '1980s'\n        WHEN year BETWEEN 1990 AND 1999 THEN '1990s'\n        WHEN year BETWEEN 2000 AND 2009 THEN '2000s'\n        WHEN year BETWEEN 2010 AND 2019 THEN '2010s'\n        ELSE NULL \n    END AS period,\n    SUM(weight) as total_weight,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 as pct_very_happy,\n    SUM(weight * (happy = 2)::INT) / SUM(weight) * 100 as pct_pretty_happy,\n    SUM(weight * (happy = 3)::INT) / SUM(weight) * 100 as pct_not_too_happy,\n    COUNT(*) as sample_size\nFROM gss\nWHERE happy IS NOT NULL AND happy IN (1, 2, 3) AND weight IS NOT NULL\nGROUP BY period\nHAVING period IS NOT NULL\nORDER BY period;",
+          "result": "| period | total_weight | pct_very_happy | pct_pretty_happy | pct_not_too_happy | sample_size |\n|---|---|---|---|---|---|\n| 1970s | 10615.529 | 34.081 | 53.482 | 12.436 | 10614 |\n| 1980s | 14105.008 | 33.361 | 55.450 | 11.189 | 14086 |\n| 1990s | 13139.767 | 32.095 | 57.375 | 10.530 | 13134 |\n| 2000s | 10515.133 | 32.690 | 55.570 | 11.741 | 10484 |\n| 2010s | 11739.778 | 30.766 | 55.822 | 13.412 | 11736 |"
+        },
+        {
+          "sql": "SELECT \n    year::VARCHAR as period,\n    SUM(weight) as total_weight,\n    SUM(weight * (happy = 1)::INT) / SUM(weight) * 100 as pct_very_happy,\n    SUM(weight * (happy = 2)::INT) / SUM(weight) * 100 as pct_pretty_happy,\n    SUM(weight * (happy = 3)::INT) / SUM(weight) * 100 as pct_not_too_happy,\n    COUNT(*) as sample_size\nFROM gss\nWHERE happy IS NOT NULL AND happy IN (1, 2, 3) AND weight IS NOT NULL AND year IN (2016, 2018, 2021, 2022, 2024)\nGROUP BY year\nORDER BY year;",
+          "result": "| period | total_weight | pct_very_happy | pct_pretty_happy | pct_not_too_happy | sample_size |\n|---|---|---|---|---|---|\n| 2016 | 2859.748 | 30.433 | 54.851 | 14.715 | 2859 |\n| 2018 | 2345.867 | 31.500 | 55.783 | 12.717 | 2344 |\n| 2021 | 4009.937 | 19.370 | 56.812 | 23.819 | 4014 |\n| 2022 | 3527.428 | 24.751 | 54.913 | 20.337 | 3520 |\n| 2024 | 3274.990 | 23.398 | 56.218 | 20.384 | 3281 |"
+        },
+        {
+          "sql": "WITH periods AS (\n    SELECT \n        CASE \n            WHEN year BETWEEN 1970 AND 1979 THEN '1970s'\n            WHEN year BETWEEN 1980 AND 1989 THEN '1980s'\n            WHEN year BETWEEN 1990 AND 1999 THEN '1990s'\n            WHEN year BETWEEN 2000 AND 2009 THEN '2000s'\n            WHEN year BETWEEN 2010 AND 2019 THEN '2010s'\n        END AS period,\n        weight,\n        happy,\n        1 as sort_order\n    FROM gss\n    WHERE happy IS NOT NULL AND happy IN (1, 2, 3) AND weight IS NOT NULL\n    \n    UNION ALL\n    \n    SELECT \n        year::VARCHAR as period,\n        weight,\n        happy,\n        2 as sort_order\n    FROM gss\n    WHERE happy IS NOT NULL AND happy IN (1, 2, 3) AND weight IS NOT NULL AND year IN (2016, 2018, 2021, 2022, 2024)\n)\nSELECT \n    period,\n    ROUND(SUM(weight * (happy = 1)::INT) / SUM(weight) * 100, 2) as pct_very_happy,\n    ROUND(SUM(weight * (happy = 2)::INT) / SUM(weight) * 100, 2) as pct_pretty_happy,\n    ROUND(SUM(weight * (happy = 3)::INT) / SUM(weight) * 100, 2) as pct_not_too_happy,\n    COUNT(*) as sample_size\nFROM periods\nWHERE period IS NOT NULL\nGROUP BY period, sort_order\nORDER BY sort_order, period;",
+          "result": "| period | pct_very_happy | pct_pretty_happy | pct_not_too_happy | sample_size |\n|---|---|---|---|---|\n| 1970s | 34.080 | 53.480 | 12.440 | 10614 |\n| 1980s | 33.360 | 55.450 | 11.190 | 14086 |\n| 1990s | 32.090 | 57.380 | 10.530 | 13134 |\n| 2000s | 32.690 | 55.570 | 11.740 | 10484 |\n| 2010s | 30.770 | 55.820 | 13.410 | 11736 |\n| 2016 | 30.430 | 54.850 | 14.720 | 2859 |\n| 2018 | 31.500 | 55.780 | 12.720 | 2344 |\n| 2021 | 19.370 | 56.810 | 23.820 | 4014 |\n| 2022 | 24.750 | 54.910 | 20.340 | 3520 |\n| 2024 | 23.400 | 56.220 | 20.380 | 3281 |"
+        }
+      ]
+    },
+    {
+      "agent": "Researcher 2",
+      "task": "Retrieve the year, life_evaluation score, and national rank for the United States in the whr (World Happiness Report) table for all available years between 2011 and 2025.",
+      "queries": [
+        {
+          "sql": "SELECT DISTINCT country FROM whr WHERE country LIKE '%United%' OR country LIKE '%US%' ORDER BY country;",
+          "result": "| country |\n|---|\n| United Arab Emirates |\n| United Kingdom |\n| United States |"
+        },
+        {
+          "sql": "SELECT year, life_evaluation, rank \nFROM whr \nWHERE country = 'United States' AND year BETWEEN 2011 AND 2025\nORDER BY year;",
+          "result": "| year | life_evaluation | rank |\n|---|---|---|\n| 2011 | 7.270 | 11 |\n| 2012 | 7.082 | 17 |\n| 2014 | 7.119 | 15 |\n| 2015 | 7.104 | 13 |\n| 2016 | 6.993 | 14 |\n| 2017 | 6.886 | 18 |\n| 2018 | 6.892 | 19 |\n| 2019 | 6.940 | 18 |\n| 2020 | 6.951 | 19 |\n| 2021 | 6.977 | 16 |\n| 2022 | 6.894 | 15 |\n| 2023 | 6.725 | 23 |\n| 2024 | 6.724 | 24 |\n| 2025 | 6.816 | 23 |"
+        },
+        {
+          "sql": "SELECT DISTINCT year FROM whr ORDER BY year;",
+          "result": "| year |\n|---|\n| 2011 |\n| 2012 |\n| 2014 |\n| 2015 |\n| 2016 |\n| 2017 |\n| 2018 |\n| 2019 |\n| 2020 |\n| 2021 |\n| 2022 |\n| 2023 |\n| 2024 |\n| 2025 |"
+        }
+      ]
+    }
+  ],
+  "created": "2026-11-10",
+  "seconds": 90,
+  "number": 5
+}
