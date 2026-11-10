@@ -1,0 +1,92 @@
+[
+  {
+    "prompt": "What share of married Americans call themselves \"very happy\"?",
+    "answer": 39.1,
+    "reveal": "Across every survey since 1972. For the never-married it is 20.8%.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "In the 1970s, 43.1% of Americans said most people can be trusted. What is it in the 2020s?",
+    "answer": 25.6,
+    "reveal": "In the 1990s it was 35.1%.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "Finland is the happiest country of 2025. What does it score out of 10?",
+    "answer": 7.8,
+    "reveal": "People rate their own life on a ladder from 0 to 10. Afghanistan, at the bottom, scores 1.4.",
+    "source": "WHR",
+    "min": 0,
+    "max": 10,
+    "step": 0.1,
+    "unit": " / 10"
+  },
+  {
+    "prompt": "Of 147 countries ranked in 2025, where does the United States land?",
+    "answer": 23,
+    "min": 1,
+    "max": 147,
+    "step": 1,
+    "unit": "",
+    "reveal": "Americans rate their lives 6.8 out of 10 on average.",
+    "source": "WHR"
+  },
+  {
+    "prompt": "Of Americans surveyed since 1972, 22.4% of the poorest fifth say they are \"very happy\". What about the richest fifth?",
+    "answer": 39.3,
+    "reveal": "The middle fifth sits at 30.0%.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "What share of Americans in the 2020s see friends at least once a week?",
+    "answer": 15.6,
+    "reveal": "In the 1970s it was 23.3%.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "In the 1970s, 34.1% of Americans called themselves \"very happy\". What is it in the 2020s?",
+    "answer": 22.3,
+    "reveal": "It was still 30.8% in the 2010s.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "16.5% of Americans in poor health say they are \"very happy\". What about those in excellent health?",
+    "answer": 46.4,
+    "reveal": "Good health: 27.9%. Fair: 19.1%.",
+    "source": "GSS",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "%"
+  },
+  {
+    "prompt": "How many of the 147 countries ranked in 2025 score 7 or higher out of 10?",
+    "answer": 10,
+    "min": 0,
+    "max": 147,
+    "step": 1,
+    "unit": "",
+    "reveal": "The middle-ranked country scores 5.9.",
+    "source": "WHR"
+  }
+]

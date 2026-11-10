@@ -6,11 +6,13 @@ Sources (see README for download instructions):
   - ATUS Well-Being Module 2021 (BLS), zip files:      data_raw/wbact-2021.zip, wbresp-2021.zip,
                                                        atusact-2021.zip, atussum-2021.zip, atuswho-2021.zip
 
-Also writes data/context.md: the schema notes the agents read before writing SQL.
+Also writes data/context.md, the schema notes the agents read before writing SQL, and
+data/guesses.json, the guess-the-stat cards the front end shows while a run is in progress.
 Run with: uv run --group prep prepare_data.py
 """
 
 import io
+import json
 import zipfile
 from pathlib import Path
 
@@ -47,8 +49,12 @@ GSS_LABELS["socrel"] = GSS_LABELS["socommun"] = GSS_LABELS["socbar"] = GSS_LABEL
 
 GSS_COLUMNS = ["year", "id", "age", "sex", "degree", "marital", "wrkstat", "childs", "region",
                "happy", "hapmar", "health", "life", "satfin", "satjob", "finrela", "class",
-               "realinc", "coninc", "trust", "socrel", "socommun", "socfrend", "socbar", "attend",
+               "realinc", "trust", "socrel", "socommun", "socfrend", "socbar", "attend",
                "wtssall", "wtssps"]
+
+# GSS reports family income in 1986 dollars (REALINC). Readers think in today's money, so convert
+# with the ratio of BLS CPI-U annual averages: 313.689 (2024) / 109.6 (1986).
+CPI_2024_OVER_1986 = 313.689 / 109.6
 
 
 def build_gss(con: duckdb.DuckDBPyConnection) -> int:
@@ -60,10 +66,10 @@ def build_gss(con: duckdb.DuckDBPyConnection) -> int:
         df[col + "_label"] = codes.map(labels)
     df.loc[df["age"] > 89, "age"] = pd.NA  # 89 is top-coded "89 or older"
     df.loc[df["realinc"] <= 0, "realinc"] = pd.NA
-    df.loc[df["coninc"] <= 0, "coninc"] = pd.NA
+    df["family_income_2024usd"] = (df["realinc"] * CPI_2024_OVER_1986).round()
+    df["year"] = df["year"].astype(int)
     df["weight"] = df["wtssps"].fillna(df["wtssall"]).fillna(1.0)
-    df = df.rename(columns={"realinc": "family_income_1986usd", "coninc": "family_income_const_usd"})
-    df = df.drop(columns=["wtssall", "wtssps"])
+    df = df.drop(columns=["realinc", "wtssall", "wtssps"])
     con.execute("CREATE OR REPLACE TABLE gss AS SELECT * FROM df")
     return len(df)
 
@@ -167,13 +173,24 @@ One row per respondent. Self-reported happiness vs. social life, money, health, 
 Ordinal answers come as a numeric code plus a `_label` text column; LOWER code = better/more
 (happy: 1 very happy ... 3 not too happy; socfrend 1 almost daily ... 7 never; EXCEPT attend: 0 never ... 8 several times a week).
 NULL means the question wasn't asked or wasn't answered that year — always filter `IS NOT NULL`.
-Weight every average/share by `weight` (e.g. SUM(weight * x) / SUM(weight)).
-family_income_1986usd is inflation-adjusted to 1986 dollars (comparable across all years).""",
+Weight every share by `weight` (e.g. SUM(weight * (happy = 1)::INT) / SUM(weight)).
+family_income_2024usd is family income before taxes in 2024 dollars, comparable across all years.
+The survey records income in brackets, so values cluster: compare bands or NTILE groups.
+CAUTION on 2021 and later: until 2018 the survey was done in person; 2021 was done on the web
+because of COVID, and 2022 and 2024 mix both. NORC warns that changes between 2018 and 2021
+may partly reflect that switch, not real change. Say so whenever a finding rests on the 2020s.""",
         "whr": f"""## whr — World Happiness Report 2026, {counts.get('whr', 0):,} country-year rows, 2011-2025 (Gallup World Poll)
 One row per country per year. life_evaluation is the 0-10 Cantril ladder (3-year average).
-The explained_by_* columns decompose each country's score into six factors
-(GDP per capita, social support, healthy life expectancy, freedom, generosity, low corruption);
-they plus dystopia_plus_residual sum to life_evaluation. rank is within that year.""",
+The explained_by_* columns are the report's estimate of how many ladder points each of six
+factors accounts for in that country's score; they plus dystopia_plus_residual sum to
+life_evaluation. They are NULL before 2019. What each factor measures:
+gdp_per_capita = national income per person; social_support = share who say they have someone
+to count on in times of trouble; healthy_life_expectancy = years lived in good health;
+freedom = share satisfied with their freedom to choose what to do with their life;
+generosity = share who donated to charity recently; low_corruption = share who do NOT see
+corruption as widespread in government and business (a view about corruption: do not call it
+"trust"). Name them as that, nothing broader.
+rank is within that year: 1 is the highest score, so a rank going from 24 to 23 is a rise.""",
         "atus_wb": f"""## atus_wb — American Time Use Survey Well-Being Module 2021, {counts.get('atus_wb', 0):,} activity episodes (BLS)
 One row per sampled activity from a respondent's day diary: what they did, for how long, who was
 with them, and how happy / meaningful / stressful / tiring / sad / painful it felt, each rated 0-6
@@ -190,6 +207,74 @@ Momentary experience, unlike gss/whr's overall life evaluations.""",
     (OUT / "context.md").write_text("\n".join(lines))
 
 
+def write_guesses(con: duckdb.DuckDBPyConnection) -> int:
+    """Guess-the-stat cards, each answer computed here so it can never drift from the data."""
+
+    def one(sql: str):
+        return con.execute(sql).fetchone()[0]
+
+    def share(condition: str, where: str) -> float:
+        return round(one(f"SELECT 100 * SUM(weight * ({condition})::INT) / SUM(weight) FROM gss WHERE {where}"), 1)
+
+    latest = one("SELECT MAX(year) FROM whr")
+    ranked = one(f"SELECT COUNT(*) FROM whr WHERE year = {latest}")
+    top, top_score = con.execute(f"SELECT country, life_evaluation FROM whr WHERE year = {latest} ORDER BY rank LIMIT 1").fetchone()
+    bottom, bottom_score = con.execute(
+        f"SELECT country, life_evaluation FROM whr WHERE year = {latest} ORDER BY life_evaluation LIMIT 1").fetchone()
+    us_rank, us_score = con.execute(
+        f"SELECT rank, life_evaluation FROM whr WHERE year = {latest} AND country = 'United States'").fetchone()
+    median_score = one(f"SELECT MEDIAN(life_evaluation) FROM whr WHERE year = {latest}")
+    quintiles = dict(con.execute("""
+        WITH t AS (SELECT *, NTILE(5) OVER (ORDER BY family_income_2024usd) AS q FROM gss
+                   WHERE family_income_2024usd IS NOT NULL AND happy IS NOT NULL)
+        SELECT q, ROUND(100 * SUM(weight * (happy = 1)::INT) / SUM(weight), 1) FROM t GROUP BY q""").fetchall())
+    happy_70s = share("happy = 1", "happy IS NOT NULL AND year < 1980")
+    trust_70s = share("trust = 1", "trust IS NOT NULL AND year < 1980")
+    poor_health = share("happy = 1", "happy IS NOT NULL AND health = 4")
+
+    pct = {"min": 0, "max": 100, "step": 1, "unit": "%"}
+    ladder = {"min": 0, "max": 10, "step": 0.1, "unit": " / 10"}
+    guesses = [
+        {"prompt": "What share of married Americans call themselves \"very happy\"?",
+         "answer": share("happy = 1", "happy IS NOT NULL AND marital = 1"),
+         "reveal": "Across every survey since 1972. For the never-married it is "
+                   f"{share('happy = 1', 'happy IS NOT NULL AND marital = 5')}%.", "source": "GSS", **pct},
+        {"prompt": f"In the 1970s, {trust_70s}% of Americans said most people can be trusted. What is it in the 2020s?",
+         "answer": share("trust = 1", "trust IS NOT NULL AND year >= 2020"),
+         "reveal": f"In the 1990s it was {share('trust = 1', 'trust IS NOT NULL AND year BETWEEN 1990 AND 1999')}%.",
+         "source": "GSS", **pct},
+        {"prompt": f"{top} is the happiest country of {latest}. What does it score out of 10?",
+         "answer": round(top_score, 1),
+         "reveal": f"People rate their own life on a ladder from 0 to 10. {bottom}, at the bottom, scores {bottom_score:.1f}.",
+         "source": "WHR", **ladder},
+        {"prompt": f"Of {ranked} countries ranked in {latest}, where does the United States land?",
+         "answer": us_rank, "min": 1, "max": ranked, "step": 1, "unit": "",
+         "reveal": f"Americans rate their lives {us_score:.1f} out of 10 on average.", "source": "WHR"},
+        {"prompt": f"Of Americans surveyed since 1972, {quintiles[1]}% of the poorest fifth say they are \"very happy\". "
+                   "What about the richest fifth?",
+         "answer": quintiles[5],
+         "reveal": f"The middle fifth sits at {quintiles[3]}%.", "source": "GSS", **pct},
+        {"prompt": "What share of Americans in the 2020s see friends at least once a week?",
+         "answer": share("socfrend <= 2", "socfrend IS NOT NULL AND year >= 2020"),
+         "reveal": f"In the 1970s it was {share('socfrend <= 2', 'socfrend IS NOT NULL AND year < 1980')}%.",
+         "source": "GSS", **pct},
+        {"prompt": f"In the 1970s, {happy_70s}% of Americans called themselves \"very happy\". What is it in the 2020s?",
+         "answer": share("happy = 1", "happy IS NOT NULL AND year >= 2020"),
+         "reveal": f"It was still {share('happy = 1', 'happy IS NOT NULL AND year BETWEEN 2010 AND 2019')}% in the 2010s.",
+         "source": "GSS", **pct},
+        {"prompt": f"{poor_health}% of Americans in poor health say they are \"very happy\". What about those in excellent health?",
+         "answer": share("happy = 1", "happy IS NOT NULL AND health = 1"),
+         "reveal": f"Good health: {share('happy = 1', 'happy IS NOT NULL AND health = 2')}%. "
+                   f"Fair: {share('happy = 1', 'happy IS NOT NULL AND health = 3')}%.", "source": "GSS", **pct},
+        {"prompt": f"How many of the {ranked} countries ranked in {latest} score 7 or higher out of 10?",
+         "answer": one(f"SELECT COUNT(*) FROM whr WHERE year = {latest} AND life_evaluation >= 7"),
+         "min": 0, "max": ranked, "step": 1, "unit": "",
+         "reveal": f"The middle-ranked country scores {median_score:.1f}.", "source": "WHR"},
+    ]
+    (OUT / "guesses.json").write_text(json.dumps(guesses, indent=2))
+    return len(guesses)
+
+
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     con = duckdb.connect(str(OUT / "happiness.duckdb"))
@@ -200,6 +285,7 @@ def main() -> None:
     if atus is not None:
         counts["atus_wb"] = atus
     write_context(con, counts)
+    print(f"guesses: {write_guesses(con)} cards")
     con.close()
     for table, n in counts.items():
         print(f"{table}: {n:,} rows")
