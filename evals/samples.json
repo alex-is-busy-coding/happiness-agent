@@ -1,0 +1,344 @@
+[
+  {
+    "id": "health",
+    "kind": "answer",
+    "question": "How much does health matter for happiness in the US?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND health = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND health = 4) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among people in excellent health, and in poor health"
+  },
+  {
+    "id": "trust",
+    "kind": "answer",
+    "question": "Are Americans who trust other people happier?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND trust = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND trust = 2) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those who say most people can be trusted, and those who say you can't be too careful"
+  },
+  {
+    "id": "friends-daily",
+    "kind": "answer",
+    "question": "Are people who see their friends almost every day the happiest?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND socfrend = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND socfrend = 3) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those who see friends almost daily, and several times a month"
+  },
+  {
+    "id": "then-and-now",
+    "kind": "answer",
+    "question": "Are Americans less happy in the 2020s than they were in the 1970s?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND year < 1980) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND year >= 2020) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy in the 1970s, and in the 2020s"
+  },
+  {
+    "id": "2021",
+    "kind": "answer",
+    "question": "How happy were Americans in 2021 compared with 2018?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND year = 2021) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND year = 2018) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy in 2021, and in 2018"
+  },
+  {
+    "id": "exciting",
+    "kind": "answer",
+    "question": "Are people who find life exciting happier than people who find it dull?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND life = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND life = 3) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those who call life exciting, and dull"
+  },
+  {
+    "id": "finances",
+    "kind": "answer",
+    "question": "How does being satisfied with your finances relate to happiness?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND satfin = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND satfin = 3) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those pretty well satisfied with their finances, and not satisfied at all"
+  },
+  {
+    "id": "religion",
+    "kind": "answer",
+    "question": "Are people who attend religious services every week or more happier than those who never attend?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND attend >= 7) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND attend = 0) AS b",
+    "tolerance": 2.0,
+    "source": "GSS",
+    "from": "gss: share very happy among those attending weekly or more, and never"
+  },
+  {
+    "id": "retired",
+    "kind": "answer",
+    "question": "Are retirees happier than the unemployed?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND wrkstat = 5) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND wrkstat = 4) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among the retired, and the unemployed"
+  },
+  {
+    "id": "education",
+    "kind": "answer",
+    "question": "Do people with graduate degrees report being happier than people who did not finish high school?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND degree = 4) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND degree = 0) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among graduate-degree holders, and those with less than high school"
+  },
+  {
+    "id": "kids",
+    "kind": "answer",
+    "question": "Are parents happier than people without children?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND childs > 0) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND childs = 0) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among people with children, and without"
+  },
+  {
+    "id": "sex",
+    "kind": "answer",
+    "question": "Are women happier than men in America?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND sex = 2) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND sex = 1) AS b",
+    "tolerance": 0.8,
+    "source": "GSS",
+    "from": "gss: share very happy among women, and men"
+  },
+  {
+    "id": "class",
+    "kind": "answer",
+    "question": "Do people who call themselves upper class report more happiness than the working class?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND class = 4) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND class = 2) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among the self-described upper class, and working class"
+  },
+  {
+    "id": "job",
+    "kind": "answer",
+    "question": "How much happier are people who are very satisfied with their job than those who are very dissatisfied?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND satjob = 1) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND satjob = 4) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those very satisfied with their job, and very dissatisfied"
+  },
+  {
+    "id": "relative-income",
+    "kind": "answer",
+    "question": "Is thinking your family income is above average linked to being happier?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND finrela = 4) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND finrela = 2) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among those who rate their income above average, and below average"
+  },
+  {
+    "id": "age",
+    "kind": "answer",
+    "question": "Are Americans aged 65 and over happier than those under 30?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND age >= 65) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND age < 30) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share very happy among people 65 and older, and under 30"
+  },
+  {
+    "id": "income-fifths",
+    "kind": "answer",
+    "question": "Are the richest fifth of Americans much happier than the poorest fifth?",
+    "gold_sql": "WITH t AS (SELECT *, NTILE(5) OVER (ORDER BY family_income_2024usd) AS q FROM gss WHERE family_income_2024usd IS NOT NULL AND happy IS NOT NULL) SELECT (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM t WHERE q = 5) AS a, (SELECT 100.0 * SUM(weight * (happy = 1)::INT) / SUM(weight) FROM t WHERE q = 1) AS b",
+    "tolerance": 2.5,
+    "source": "GSS",
+    "from": "gss: share very happy in the top and bottom fifths of family income"
+  },
+  {
+    "id": "trust-decline",
+    "kind": "answer",
+    "question": "Has trust in other people declined in America between the 1970s and the 2020s?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (trust = 1)::INT) / SUM(weight) FROM gss WHERE trust IS NOT NULL AND year < 1980) AS a, (SELECT 100.0 * SUM(weight * (trust = 1)::INT) / SUM(weight) FROM gss WHERE trust IS NOT NULL AND year >= 2020) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share saying most people can be trusted in the 1970s, and in the 2020s"
+  },
+  {
+    "id": "friends-less",
+    "kind": "answer",
+    "question": "Did the share of Americans who see friends at least once a week fall between the 1970s and the 2020s?",
+    "gold_sql": "SELECT (SELECT 100.0 * SUM(weight * (socfrend <= 2)::INT) / SUM(weight) FROM gss WHERE socfrend IS NOT NULL AND year < 1980) AS a, (SELECT 100.0 * SUM(weight * (socfrend <= 2)::INT) / SUM(weight) FROM gss WHERE socfrend IS NOT NULL AND year >= 2020) AS b",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share seeing friends at least weekly in the 1970s, and in the 2020s"
+  },
+  {
+    "id": "unhappy-now",
+    "kind": "answer",
+    "question": "What share of Americans say they are not too happy in the 2020s?",
+    "gold_sql": "SELECT 100.0 * SUM(weight * (happy = 3)::INT) / SUM(weight) FROM gss WHERE happy IS NOT NULL AND year >= 2020",
+    "tolerance": 1.5,
+    "source": "GSS",
+    "from": "gss: share 'not too happy' in the 2020s"
+  },
+  {
+    "id": "finland",
+    "kind": "answer",
+    "question": "How happy is Finland?",
+    "gold_sql": "SELECT life_evaluation FROM whr WHERE country = 'Finland' AND year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: Finland's life evaluation in the latest year"
+  },
+  {
+    "id": "us-rank",
+    "kind": "answer",
+    "question": "Where does the United States rank in world happiness today?",
+    "gold_sql": "SELECT rank FROM whr WHERE country = 'United States' AND year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0,
+    "source": "WHR",
+    "from": "whr: the US rank in the latest year"
+  },
+  {
+    "id": "least-happy",
+    "kind": "answer",
+    "question": "Which country is the least happy in the world, and how low does it score?",
+    "gold_sql": "SELECT country, life_evaluation FROM whr WHERE year = (SELECT MAX(year) FROM whr) ORDER BY life_evaluation LIMIT 1",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: the lowest life evaluation in the latest year, and whose it is"
+  },
+  {
+    "id": "costa-rica",
+    "kind": "answer",
+    "question": "How does Costa Rica compare with the Nordic countries on happiness?",
+    "gold_sql": "SELECT life_evaluation FROM whr WHERE country = 'Costa Rica' AND year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: Costa Rica's life evaluation in the latest year"
+  },
+  {
+    "id": "world-average",
+    "kind": "answer",
+    "question": "What is the average life evaluation across the world's countries in the latest year?",
+    "gold_sql": "SELECT AVG(life_evaluation) FROM whr WHERE year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: mean life evaluation in the latest year"
+  },
+  {
+    "id": "top-2016",
+    "kind": "answer",
+    "question": "Which country was the happiest in the world in 2016?",
+    "gold_sql": "SELECT country FROM whr WHERE year = 2016 AND rank = 1",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: the top-ranked country of 2016"
+  },
+  {
+    "id": "us-slide",
+    "kind": "answer",
+    "question": "How has the United States' life evaluation changed since 2011?",
+    "gold_sql": "SELECT (SELECT life_evaluation FROM whr WHERE country = 'United States' AND year = 2011) AS a, (SELECT life_evaluation FROM whr WHERE country = 'United States' AND year = (SELECT MAX(year) FROM whr)) AS b",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: US life evaluation in 2011, and in the latest year"
+  },
+  {
+    "id": "top-five",
+    "kind": "answer",
+    "question": "Which five countries are the happiest in the latest year?",
+    "gold_sql": "SELECT country FROM whr WHERE year = (SELECT MAX(year) FROM whr) ORDER BY rank LIMIT 5",
+    "tolerance": 0,
+    "source": "WHR",
+    "from": "whr: the five top-ranked countries in the latest year"
+  },
+  {
+    "id": "denmark",
+    "kind": "answer",
+    "question": "Is Denmark still one of the happiest countries?",
+    "gold_sql": "SELECT life_evaluation FROM whr WHERE country = 'Denmark' AND year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: Denmark's life evaluation in the latest year"
+  },
+  {
+    "id": "support",
+    "kind": "answer",
+    "question": "How many points of a country's life evaluation does social support account for on average in the latest year?",
+    "gold_sql": "SELECT AVG(explained_by_social_support) FROM whr WHERE year = (SELECT MAX(year) FROM whr)",
+    "tolerance": 0.1,
+    "source": "WHR",
+    "from": "whr: mean social-support contribution in the latest year"
+  },
+  {
+    "id": "vague-1",
+    "kind": "clarify",
+    "question": "tell me about happiness",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "vague-2",
+    "kind": "clarify",
+    "question": "is life good?",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "vague-3",
+    "kind": "clarify",
+    "question": "happiness?",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "vague-4",
+    "kind": "clarify",
+    "question": "what should I know",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "vague-5",
+    "kind": "clarify",
+    "question": "how are people doing these days",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "vague-6",
+    "kind": "clarify",
+    "question": "compare things for me",
+    "from": "written by hand: too vague to turn into a data question"
+  },
+  {
+    "id": "cannot-genes",
+    "kind": "decline",
+    "question": "Is there a gene that makes some people happier?",
+    "from": "written by hand: needs genetic data"
+  },
+  {
+    "id": "cannot-activities",
+    "kind": "decline",
+    "question": "Which daily activities make people feel happiest in the moment?",
+    "from": "written by hand: needs the time-use survey, which is not loaded"
+  },
+  {
+    "id": "cannot-therapy",
+    "kind": "decline",
+    "question": "Does going to therapy make people happier?",
+    "from": "written by hand: therapy is not measured in either survey"
+  },
+  {
+    "id": "cannot-cities",
+    "kind": "decline",
+    "question": "Are people in Tokyo happier than people in Osaka?",
+    "from": "written by hand: the country data has no cities"
+  },
+  {
+    "id": "cannot-pets",
+    "kind": "decline",
+    "question": "Do dog owners report being happier than cat owners?",
+    "from": "written by hand: pet ownership is not in the data"
+  },
+  {
+    "id": "cannot-forecast",
+    "kind": "decline",
+    "question": "How happy will Americans be in 2040?",
+    "from": "written by hand: a forecast, not something a survey measured"
+  }
+]

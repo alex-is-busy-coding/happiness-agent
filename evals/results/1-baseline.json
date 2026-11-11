@@ -1,0 +1,875 @@
+{
+  "summary": {
+    "samples": 42,
+    "margin_of_error": 0.154,
+    "passed": [
+      41,
+      42
+    ],
+    "answer: gold answer in the story": [
+      30,
+      30
+    ],
+    "clarify: asked instead of guessing": [
+      6,
+      6
+    ],
+    "decline: said the data can't answer": [
+      5,
+      6
+    ],
+    "stories citing the expected survey": [
+      30,
+      30
+    ],
+    "stated statistics found in a query result": [
+      408,
+      409
+    ],
+    "seconds: median, slowest": [
+      83,
+      249
+    ],
+    "stories with no causal claim (judge)": [
+      23,
+      30
+    ]
+  },
+  "results": [
+    {
+      "id": "health",
+      "kind": "answer",
+      "question": "How much does health matter for happiness in the US?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          19,
+          19
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 84,
+      "outcome": "report",
+      "gold": [
+        46.42,
+        16.5
+      ],
+      "flagged": "While national income remains a powerful force, explaining 2.0 of the life evaluation score in 2025, the contribution of healthy life expectancy has lagged behind (WHR 2026).",
+      "passed": true,
+      "title": "health and happiness",
+      "answer": "Your physical health is linked to the largest happiness gap in America, with 46% of those in excellent health reporting they are very happy."
+    },
+    {
+      "id": "trust",
+      "kind": "answer",
+      "question": "Are Americans who trust other people happier?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          15,
+          15
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 65,
+      "outcome": "report",
+      "gold": [
+        38.37,
+        28.59
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "trust and happiness",
+      "answer": "Americans who trust others are happier, with 38% of trusting individuals reporting they are very happy compared to just 29% of those who remain cautious."
+    },
+    {
+      "id": "friends-daily",
+      "kind": "answer",
+      "question": "Are people who see their friends almost every day the happiest?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          23,
+          23
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 110,
+      "outcome": "report",
+      "gold": [
+        26.58,
+        32.78
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "friendship daily",
+      "answer": "On the surface, only 27% of daily socializers report being very happy, but this is because they are mostly unmarried; among married people, daily socializers are the happiest at 49%."
+    },
+    {
+      "id": "then-and-now",
+      "kind": "answer",
+      "question": "Are Americans less happy in the 2020s than they were in the 1970s?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          22,
+          22
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 93,
+      "outcome": "report",
+      "gold": [
+        34.08,
+        22.35
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "fading happiness",
+      "answer": "Yes. The share of Americans who say they are very happy has dropped to 22%, down from 34% in the 1970s."
+    },
+    {
+      "id": "2021",
+      "kind": "answer",
+      "question": "How happy were Americans in 2021 compared with 2018?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          11,
+          11
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 227,
+      "outcome": "report",
+      "gold": [
+        19.37,
+        31.5
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "american happiness",
+      "answer": "While global life evaluations rose slightly to 7.0, domestic surveys showed the share of very happy Americans dropped to 19%."
+    },
+    {
+      "id": "exciting",
+      "kind": "answer",
+      "question": "Are people who find life exciting happier than people who find it dull?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          20,
+          20
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 77,
+      "outcome": "report",
+      "gold": [
+        45.25,
+        8.52
+      ],
+      "flagged": "The sharp drop in excitement during the 2020s likely reflects the impact of the pandemic, but it is also heavily mixed up with how the survey was run.",
+      "passed": true,
+      "title": "the excitement premium",
+      "answer": "People who find life exciting are over five times more likely to be very happy than those who find it dull, with 45% of the exciting group reporting high happiness."
+    },
+    {
+      "id": "finances",
+      "kind": "answer",
+      "question": "How does being satisfied with your finances relate to happiness?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          8,
+          8
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 69,
+      "outcome": "report",
+      "gold": [
+        46.32,
+        16.72
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "wallet and worry",
+      "answer": "Feeling satisfied with your money has a stronger link to happiness than actual income, with 46% of financially satisfied people reporting they are very happy."
+    },
+    {
+      "id": "religion",
+      "kind": "answer",
+      "question": "Are people who attend religious services every week or more happier than those who never attend?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          10,
+          10
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 59,
+      "outcome": "report",
+      "gold": [
+        40.54,
+        23.85
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "pews and peace",
+      "answer": "People who attend religious services weekly or more report higher happiness, with 41% saying they are very happy compared to 24% of those who never attend."
+    },
+    {
+      "id": "retired",
+      "kind": "answer",
+      "question": "Are retirees happier than the unemployed?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          17,
+          17
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 65,
+      "outcome": "report",
+      "gold": [
+        34.6,
+        16.01
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "retired and happy",
+      "answer": "Retirees report much higher levels of happiness than the unemployed, with 35% of retired people calling themselves very happy compared to just 16% of those without a job."
+    },
+    {
+      "id": "education",
+      "kind": "answer",
+      "question": "Do people with graduate degrees report being happier than people who did not finish high school?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          12,
+          12
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 155,
+      "outcome": "report",
+      "gold": [
+        36.32,
+        29.55
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "degrees of happiness",
+      "answer": "People with graduate degrees report being happier overall, but when you look within the same income tiers, the diploma advantage vanishes."
+    },
+    {
+      "id": "kids",
+      "kind": "answer",
+      "question": "Are parents happier than people without children?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          16,
+          16
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 74,
+      "outcome": "report",
+      "gold": [
+        32.99,
+        26.43
+      ],
+      "flagged": "While 33% of parents report being very happy compared to 26% of non-parents, this advantage is an illusion driven by marriage.",
+      "passed": true,
+      "title": "parents & happiness",
+      "answer": "While 33% of parents report being very happy compared to 26% of non-parents, this advantage is an illusion driven by marriage. When comparing married and unmarried groups separately, people without children are usually happier."
+    },
+    {
+      "id": "sex",
+      "kind": "answer",
+      "question": "Are women happier than men in America?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          20,
+          20
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 75,
+      "outcome": "report",
+      "gold": [
+        31.78,
+        30.25
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "gender and happiness",
+      "answer": "Overall, women are slightly more likely to report being very happy than men, with 32% of women saying so compared to 30% of men."
+    },
+    {
+      "id": "class",
+      "kind": "answer",
+      "question": "Do people who call themselves upper class report more happiness than the working class?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          17,
+          17
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 85,
+      "outcome": "report",
+      "gold": [
+        45.55,
+        26.77
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "class and cheer",
+      "answer": "Yes, people who identify as upper class report higher happiness levels, with 46% saying they are very happy compared to 27% of the working class."
+    },
+    {
+      "id": "job",
+      "kind": "answer",
+      "question": "How much happier are people who are very satisfied with their job than those who are very dissatisfied?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          11,
+          11
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 154,
+      "outcome": "report",
+      "gold": [
+        42.94,
+        13.98
+      ],
+      "flagged": "the daily grind dictates your mood",
+      "passed": true,
+      "title": "work and joy",
+      "answer": "Workers who are very satisfied with their jobs are three times more likely to be very happy overall than those who are very dissatisfied, with 43% reporting top-tier happiness."
+    },
+    {
+      "id": "relative-income",
+      "kind": "answer",
+      "question": "Is thinking your family income is above average linked to being happier?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          6,
+          6
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 154,
+      "outcome": "report",
+      "gold": [
+        39.1,
+        22.03
+      ],
+      "flagged": "Actual cash does not dictate your happiness as much as the story in your head (GSS 1972-2024).",
+      "passed": true,
+      "title": "relative riches",
+      "answer": "Believing your family income is above average is linked to higher happiness, with 39% of those holding this perception reporting they are very happy."
+    },
+    {
+      "id": "age",
+      "kind": "answer",
+      "question": "Are Americans aged 65 and over happier than those under 30?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          14,
+          14
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 70,
+      "outcome": "report",
+      "gold": [
+        35.46,
+        26.93
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "aging and happiness",
+      "answer": "Older Americans report higher general happiness than those under 30, with 36% of seniors reporting they are very happy compared to 27% of younger adults."
+    },
+    {
+      "id": "income-fifths",
+      "kind": "answer",
+      "question": "Are the richest fifth of Americans much happier than the poorest fifth?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          7,
+          8
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 114,
+      "outcome": "report",
+      "gold": [
+        39.27,
+        22.38
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "money and mood",
+      "answer": "Yes, 40% of the richest fifth of Americans report being very happy, compared to just 23% of the poorest."
+    },
+    {
+      "id": "trust-decline",
+      "kind": "answer",
+      "question": "Has trust in other people declined in America between the 1970s and the 2020s?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          8,
+          8
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 92,
+      "outcome": "report",
+      "gold": [
+        43.07,
+        25.64
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "trust in decline",
+      "answer": "The share of Americans who believe most people can be trusted has steadily fallen, reaching a low of 26% in the 2020s."
+    },
+    {
+      "id": "friends-less",
+      "kind": "answer",
+      "question": "Did the share of Americans who see friends at least once a week fall between the 1970s and the 2020s?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          11,
+          11
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 82,
+      "outcome": "report",
+      "gold": [
+        23.29,
+        15.64
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "the weekly friend",
+      "answer": "Yes, the share of Americans who see friends at least once a week fell from 23% in the 1970s to 16% in the 2020s."
+    },
+    {
+      "id": "unhappy-now",
+      "kind": "answer",
+      "question": "What share of Americans say they are not too happy in the 2020s?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          18,
+          18
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 239,
+      "outcome": "report",
+      "gold": [
+        21.64
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "not too happy",
+      "answer": "In the 2020s, a record 22% of Americans report they are not too happy, up from 13% in the previous decade."
+    },
+    {
+      "id": "finland",
+      "kind": "answer",
+      "question": "How happy is Finland?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          12,
+          12
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 223,
+      "outcome": "report",
+      "gold": [
+        7.76
+      ],
+      "flagged": "Feeling free to choose what to do with your life adds another 1.1 points, tying Finland with Iceland for the top spot in this category (WHR 2026).",
+      "passed": true,
+      "title": "the finnish streak",
+      "answer": "Finland has held the top global spot for nine consecutive years, scoring 7.8 out of 10 in the latest survey."
+    },
+    {
+      "id": "us-rank",
+      "kind": "answer",
+      "question": "Where does the United States rank in world happiness today?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          17,
+          17
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 76,
+      "outcome": "report",
+      "gold": [
+        23.0
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "us happiness",
+      "answer": "The United States ranks 23rd in the world for life evaluation, with a score of 6.8 out of 10."
+    },
+    {
+      "id": "least-happy",
+      "kind": "answer",
+      "question": "Which country is the least happy in the world, and how low does it score?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          12,
+          12
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 165,
+      "outcome": "report",
+      "gold": [
+        "Afghanistan",
+        1.45
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "the bottom rung",
+      "answer": "Afghanistan reports the lowest life evaluation score in the world, scoring just 1.4 on a ten-point scale in 2025."
+    },
+    {
+      "id": "costa-rica",
+      "kind": "answer",
+      "question": "How does Costa Rica compare with the Nordic countries on happiness?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          22,
+          22
+        ],
+        "no_causal_claim": false
+      },
+      "seconds": 63,
+      "outcome": "report",
+      "gold": [
+        7.44
+      ],
+      "flagged": "Income plays a smaller role in Costa Rica",
+      "passed": true,
+      "title": "happiness in the tropics",
+      "answer": "Costa Rica climbed to 4th place globally in 2025 with a happiness score of 7.4, surpassing Sweden and Norway."
+    },
+    {
+      "id": "world-average",
+      "kind": "answer",
+      "question": "What is the average life evaluation across the world's countries in the latest year?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          6,
+          6
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 41,
+      "outcome": "report",
+      "gold": [
+        5.65
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "grading our lives",
+      "answer": "Globally, people rate their lives at an average of 5.7 out of 10."
+    },
+    {
+      "id": "top-2016",
+      "kind": "answer",
+      "question": "Which country was the happiest in the world in 2016?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          8,
+          8
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 159,
+      "outcome": "report",
+      "gold": [
+        "Norway"
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "norway at the peak",
+      "answer": "Norway was the happiest country in the world in 2016, leading the global index with a life evaluation score of 7.5."
+    },
+    {
+      "id": "us-slide",
+      "kind": "answer",
+      "question": "How has the United States' life evaluation changed since 2011?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          17,
+          17
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 46,
+      "outcome": "report",
+      "gold": [
+        7.27,
+        6.82
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "slipping down the ladder",
+      "answer": "Since 2011, the average life evaluation score in the United States has slipped from 7.3 to 6.8, dragging its global rank down from 11th to 23rd."
+    },
+    {
+      "id": "top-five",
+      "kind": "answer",
+      "question": "Which five countries are the happiest in the latest year?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          5,
+          5
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 36,
+      "outcome": "report",
+      "gold": [
+        "Finland",
+        "Iceland",
+        "Denmark",
+        "Costa Rica",
+        "Sweden"
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "the happiest countries",
+      "answer": "In 2025, Finland remains the highest-rated nation in the world with a life evaluation score of 7.8."
+    },
+    {
+      "id": "denmark",
+      "kind": "answer",
+      "question": "Is Denmark still one of the happiest countries?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          13,
+          13
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 249,
+      "outcome": "report",
+      "gold": [
+        7.54
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "denmark and happiness",
+      "answer": "Denmark remains near the top, ranking 3rd out of 147 countries in 2025 with an average life evaluation score of 7.5."
+    },
+    {
+      "id": "support",
+      "kind": "answer",
+      "question": "How many points of a country's life evaluation does social support account for on average in the latest year?",
+      "checks": {
+        "gold": true,
+        "cited": true,
+        "traceable": [
+          11,
+          11
+        ],
+        "no_causal_claim": true
+      },
+      "seconds": 80,
+      "outcome": "report",
+      "gold": [
+        1.2
+      ],
+      "flagged": "",
+      "passed": true,
+      "title": "the safety net",
+      "answer": "In 2025, having someone to count on in times of trouble accounted for an average of 1.2 points of a country's life evaluation score."
+    },
+    {
+      "id": "vague-1",
+      "kind": "clarify",
+      "question": "tell me about happiness",
+      "checks": {},
+      "seconds": 3,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "\"Happiness\" can be explored in many ways, from how individual Americans rate their lives over the last fifty years to how countries compare globally. To help narrow this down, please choose one of the following questions or let me know what specific aspects you are interested in."
+    },
+    {
+      "id": "vague-2",
+      "kind": "clarify",
+      "question": "is life good?",
+      "checks": {},
+      "seconds": 3,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "\"Is life good?\" is a very broad question, but we can explore self-reported happiness and life satisfaction across different countries or look at what factors drive personal happiness in the US. Please let us know which specific angle you would like to investigate:"
+    },
+    {
+      "id": "vague-3",
+      "kind": "clarify",
+      "question": "happiness?",
+      "checks": {},
+      "seconds": 2,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Your question is too broad to analyze directly. The datasets cover self-reported happiness in the US over time and life evaluation across different countries, so we need to narrow the focus."
+    },
+    {
+      "id": "vague-4",
+      "kind": "clarify",
+      "question": "what should I know",
+      "checks": {},
+      "seconds": 3,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "This question is too broad for us to analyze directly. Please let us know if you want to explore individual happiness factors in the US (using the General Social Survey) or global happiness comparisons between countries (using the World Happiness Report)."
+    },
+    {
+      "id": "vague-5",
+      "kind": "clarify",
+      "question": "how are people doing these days",
+      "checks": {},
+      "seconds": 4,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "\"How people are doing\" can mean many different things depending on the geographic focus and the specific aspects of life you want to look at. Would you like to focus on global trends or zoom in on the United States?"
+    },
+    {
+      "id": "vague-6",
+      "kind": "clarify",
+      "question": "compare things for me",
+      "checks": {},
+      "seconds": 3,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Please specify what you would like to compare, as our datasets cover happiness across countries or how individual factors like income, relationships, and health relate to happiness in the US."
+    },
+    {
+      "id": "cannot-genes",
+      "kind": "decline",
+      "question": "Is there a gene that makes some people happier?",
+      "checks": {},
+      "seconds": 3,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Our datasets consist of social and country-level surveys (the General Social Survey and the World Happiness Report) and do not contain genetic, biological, or medical data. However, we can explore how social, economic, and environmental factors relate to self-reported happiness."
+    },
+    {
+      "id": "cannot-activities",
+      "kind": "decline",
+      "question": "Which daily activities make people feel happiest in the moment?",
+      "checks": {},
+      "seconds": 4,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Our dataset tracking daily activities and momentary, in-the-moment emotions (the American Time Use Survey Well-Being module) is currently unavailable. We can instead use the General Social Survey to examine how the frequency of different social and community activities relates to long-term happiness."
+    },
+    {
+      "id": "cannot-therapy",
+      "kind": "decline",
+      "question": "Does going to therapy make people happier?",
+      "checks": {},
+      "seconds": 6,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Our datasets do not contain information on therapy, mental health counseling, or clinical interventions. However, we can explore how general health, social connections, or trust relate to happiness."
+    },
+    {
+      "id": "cannot-cities",
+      "kind": "decline",
+      "question": "Are people in Tokyo happier than people in Osaka?",
+      "checks": {},
+      "seconds": 4,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Our datasets do not contain city-level data for Tokyo or Osaka, as the World Happiness Report covers country-level trends and the General Social Survey is limited to US adults. We can instead explore country-level happiness in Japan or regional happiness trends in the US."
+    },
+    {
+      "id": "cannot-pets",
+      "kind": "decline",
+      "question": "Do dog owners report being happier than cat owners?",
+      "checks": {},
+      "seconds": 4,
+      "outcome": "clarify",
+      "passed": true,
+      "reply": "Our datasets do not contain information on pet ownership, such as owning dogs or cats, so we cannot compare their happiness levels. However, we can explore how other forms of companionship, social connections, and community engagement relate to happiness."
+    },
+    {
+      "id": "cannot-forecast",
+      "kind": "decline",
+      "question": "How happy will Americans be in 2040?",
+      "checks": {},
+      "seconds": 159,
+      "outcome": "report",
+      "passed": false,
+      "reply": "Americans reporting they are very happy hit a historic low of 19% in 2021, and the nation's global rank fell to 23rd by 2025."
+    }
+  ]
+}
