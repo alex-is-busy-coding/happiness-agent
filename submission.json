@@ -1,5 +1,7 @@
 {
-  "deploy_url": "https://happiness-agent-git-667678606632.europe-west1.run.app/",
-  "authors": ["av3341"],
+  "deploy_url": "https://happiness-agent-git-667678606632.europe-west1.run.app",
+  "authors": [
+    "av3341"
+  ],
   "path": "research"
 }
