@@ -8,6 +8,12 @@
 > Every question spends a few dozen model calls, so the sign-in keeps strangers from running
 > up the bill. Use your Columbia (LionMail) account when prompted.
 
+![A question asked, the research board at work, and the story that comes back](docs/demo.gif)
+
+*Can't sign in? This is a real run, recorded in the browser: a question is asked, three
+researchers query the data in parallel, and a story is filed. The two-minute wait in the
+middle is sped up 20 times.*
+
 *What makes a happy life?* A tiny data newsroom staffed by AI agents. Ask it a question about
 happiness and a **Lead** splits it into tasks, fans out **Researchers** that query half a
 century of survey data in parallel with SQL, goes back for more when the findings leave a gap,
@@ -69,6 +75,10 @@ answer is a *story* with its own colour, a lowercase cover line, and a methods n
   SQL query, and the rows that came back. For a story you just commissioned, "see how the
   agents think" opens the starter's context panel with the exact messages each agent saw.
 - Stories you commission are kept in your browser and get their own shelf.
+
+| A story | The research board | The paper trail |
+|---|---|---|
+| ![A story: coloured hero, the answer as a pull quote, three headline numbers](docs/story.png) | ![The research board: the lead's plan, a card per researcher with its SQL, and the guessing game](docs/board.png) | ![The paper trail: a researcher's SQL and the rows it returned](docs/trail.png) |
 
 ## The data
 
@@ -153,6 +163,7 @@ make_stories.py     offline: research the archive's stories with the live agent
 baseline.py         the same model with no tools, for the comparisons below
 evals/              42 scored questions, the runner, and the two recorded runs
 tests/              unit tests for everything that doesn't need a model
+docs/               the demo recording and screenshots above
 context_panel.py, context-panel.js   the course starter's context panel, unchanged
 ```
 
