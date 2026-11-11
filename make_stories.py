@@ -11,11 +11,10 @@ import asyncio
 import json
 import re
 import sys
-from pathlib import Path
 
-from app import AgentContexts, DeskHooks, deep_research
-
-OUT = Path(__file__).parent / "stories"
+from context_panel import AgentContexts
+from desk.agents import DeskHooks, deep_research
+from desk.config import STORIES_DIR as OUT
 
 QUESTIONS = [
     "Does more money make people happier, and does it ever stop mattering?",
