@@ -1,5 +1,13 @@
 # the happiness desk
 
+[![Open the live desk](https://img.shields.io/badge/live_demo-open_the_happiness_desk-ffd84a?style=for-the-badge&logo=googlecloud&logoColor=1b1813)](https://happiness-agent-git-667678606632.europe-west1.run.app/)
+[![Sign in with a columbia.edu account](https://img.shields.io/badge/sign--in-columbia.edu_accounts_only-1b1813?style=for-the-badge)](https://happiness-agent-git-667678606632.europe-west1.run.app/)
+[![checks](https://github.com/alex-is-busy-coding/happiness-agent/actions/workflows/checks.yml/badge.svg)](https://github.com/alex-is-busy-coding/happiness-agent/actions/workflows/checks.yml)
+
+> **The live demo asks you to sign in with Google, and only columbia.edu accounts get in.**
+> Every question spends a few dozen model calls, so the sign-in keeps strangers from running
+> up the bill. Use your Columbia (LionMail) account when prompted.
+
 *What makes a happy life?* A tiny data newsroom staffed by AI agents. Ask it a question about
 happiness and a **Lead** splits it into tasks, fans out **Researchers** that query half a
 century of survey data in parallel with SQL, goes back for more when the findings leave a gap,
@@ -13,11 +21,34 @@ combine to create both momentary happiness and lifelong meaning?
 whether money, marriage or friends actually move the needle) who wants answers grounded in
 named surveys, with the work shown.
 
-**Path:** Deep Research (`research`). Three agent shapes (Lead, Researcher, Writer). The Lead
-fans out up to 6 Researchers in one turn, each in a fresh context with a hard budget of 6
-queries. It goes back for gaps at most twice. Vague or out-of-scope questions come back as a
-clarification with sharper questions to pick from. Every claim cites its dataset, and every
-number must appear in a query result.
+## How it works
+
+```mermaid
+flowchart LR
+    Q([question]) --> L[Lead]
+    L -- too vague, or outside the data --> C([clarification with sharper questions])
+    L -- 2 to 4 tasks in one turn --> R[Researchers, in parallel, each in a fresh context]
+    R -- SQL, 6 queries each --> D[(DuckDB: GSS + WHR)]
+    R -- findings --> L
+    L -- a gap? up to 2 more rounds --> R
+    L -- DONE --> W[Writer]
+    W --> S([story: answer, charts, sources, paper trail])
+```
+
+**Path:** Deep Research (`research`).
+
+- **Three agent shapes with different jobs.** The Lead plans, delegates and judges coverage;
+  it has no access to the data. Researchers answer one task each with `run_sql`. The Writer
+  sees only the question and the findings.
+- **Parallel fan-out in fresh contexts.** The Lead calls `research` once per task in a single
+  turn; each call runs a new Researcher with its own context and its own budget of 6 queries.
+- **Back for more, up to a cap.** The Lead reads the findings and may send further
+  Researchers for a gap: at most 6 Researchers and 12 Lead turns in all, no new Researcher
+  after 150 s, and research ends at 210 s so the Writer always has time inside five minutes.
+- **Vague questions get a clarification**, with sharper questions to pick from. A reply in
+  the same conversation ("the first one") is read as the answer to it.
+- **Cited.** Every sentence that states a fact names its survey, every number must come from
+  a query result, and each story carries its full paper trail of SQL and returned rows.
 
 ## The front end
 
@@ -30,8 +61,8 @@ answer is a *story* with its own colour, a lowercase cover line, and a methods n
 - **A live research board.** While a run is in progress the page shows the stage (plan,
   research, gap check, write), the lead's plan, and one card per researcher with its task, the
   SQL it is running right now, and its query budget.
-- **Guess the stat.** The 2 to 4 minute wait comes with a guessing game: drag a slider, lock
-  it in, see the real number. The answers are computed from the database by `prepare_data.py`.
+- **Guess the stat.** The wait comes with a guessing game: drag a slider, lock it in, see the
+  real number. The answers are computed from the database by `prepare_data.py`.
 - **Stories, not reports.** A pull-quote answer, three headline numbers, sections with one
   point each, charts titled with their takeaway, and source chips on every claim.
 - **How we did this.** Every story ends with its paper trail: each researcher's task, every
@@ -78,18 +109,57 @@ cp .env.example .env   # set GOOGLE_CLOUD_PROJECT (a project with the Vertex AI 
 uv run app.py          # open http://localhost:8000
 ```
 
-`/chat` keeps the Project 1 response shape: `POST {"message": ...}` returns
-`{"response", "tool_calls"}`, where every call carries the `agent` that made it (the Lead's
-`research` calls and each Researcher's `run_sql` calls, with results).
+### `/chat`
+
+The Project 1 request and response, with the agent added to each tool call:
 
 ```sh
 curl -s localhost:8000/chat -H 'Content-Type: application/json' \
   -d '{"message": "Are married people happier than single people?"}'
 ```
 
-The page itself uses `GET /run?question=...`, the same run streamed as Server-Sent Events.
-`/stories`, `/stories/{id}`, `/guesses` and `/meta` serve the archive, the guessing game and
-the dataset counts in the masthead.
+```jsonc
+{
+  "response": "# marriage & happiness\n\n*Does tying the knot ...",  // the story, or a clarification
+  "session_id": "5f0c…",       // send it back to continue the conversation
+  "tool_calls": [              // the Lead's and every Researcher's, in order
+    {"agent": "Lead", "name": "research", "args": {"task": "…"}, "result": "…"},
+    {"agent": "Researcher 1", "name": "run_sql", "args": {"sql": "SELECT …"}, "result": "| marital_label | … |"}
+  ],
+  "sources": [{"name": "General Social Survey 1972-2024 (NORC)", "url": "https://gss.norc.org/", "updated": "every two years"}]
+}
+```
+
+A run takes one to four minutes, so set the client's timeout to five. The page itself uses
+`GET /run?question=...`, the same run streamed as Server-Sent Events. `/stories`,
+`/stories/{id}`, `/guesses` and `/meta` serve the archive, the guessing game and the dataset
+counts in the masthead.
+
+## Project layout
+
+```
+app.py              the HTTP surface: the page, the archive, /run (SSE) and /chat
+desk/
+  agents.py         the Lead, Researcher and Writer, their tools, and one run through them
+  prompts.py        what each agent is told
+  story.py          from the Writer's reply to a story; the run's tool calls and paper trail
+  database.py       read-only queries against the DuckDB
+  archive.py        featured stories and those filed since startup
+  limits.py         the budget on runs
+  config.py         paths, the model, and every limit in one place
+index.html, static/ the page, its stylesheet and script
+prepare_data.py     offline: raw survey files -> database, schema notes, guess cards
+make_stories.py     offline: research the archive's stories with the live agent
+baseline.py         the same model with no tools, for the comparisons below
+evals/              42 scored questions, the runner, and the two recorded runs
+tests/              unit tests for everything that doesn't need a model
+context_panel.py, context-panel.js   the course starter's context panel, unchanged
+```
+
+```sh
+uv run --group dev pytest        # 26 tests, no model calls
+uv run --group dev ruff check .  # and `ruff format --check .`; both run in CI on every push
+```
 
 ## Sample queries for grading
 
@@ -145,6 +215,56 @@ A fourth to try: **"tell me about happiness"** comes back as a clarification wit
 sharper questions, and **"which daily activities feel most meaningful?"** comes back saying
 the time-use data isn't loaded, with questions the other surveys can answer.
 
+## Evals
+
+Not required on the Deep Research path, but the most direct evidence that the agent answers
+its questions correctly. `evals/samples.json` holds 42 samples, none of which appears in a
+prompt (the prompts' two format examples are about tea, on purpose):
+
+| Kind | n | Where each comes from | Passes when |
+|---|---|---|---|
+| answer | 30 | Gold computed by the sample's own SQL against the database (20 GSS, 10 WHR), so it moves with the data. `--gold` prints it. | the story states every gold number, within rounding, and names every gold country |
+| clarify | 6 | Written by hand: too vague to turn into a data question | the Lead asks instead of guessing |
+| decline | 6 | Written by hand: genes, pets, cities, therapy, a forecast, the unloaded time-use data | the Lead says the data can't answer, instead of filing a story |
+
+Two kinds of scorer. **Deterministic checks:** the right kind of outcome; the gold answer in
+the story; the expected survey cited; and traceability, which looks up every percentage or
+decimal the story states in prose among the rows its researchers' queries returned. **A judge
+with a rubric** (the same model, temperature 0): does any sentence claim causation from a
+correlation?
+
+```sh
+uv run python -m evals.run          # all 42: about 20 minutes of model calls
+uv run python -m evals.run --gold   # just print the gold answers
+```
+
+| | Baseline | After change 1 |
+|---|---|---|
+| **Passed** (n = 42, margin ±15 points) | **41 / 42** | **42 / 42** |
+| answer: gold answer in the story | 30 / 30 | 30 / 30 |
+| clarify: asked instead of guessing | 6 / 6 | 6 / 6 |
+| decline: said the data can't answer | 5 / 6 | 6 / 6 |
+| stories citing the expected survey | 30 / 30 | 30 / 30 |
+| stated statistics found in a query result | 408 / 409 | 390 / 391 |
+| stories with no causal claim, per the judge (n = 30, margin ±18 points) | 23 / 30 | 23 / 30 |
+| seconds per story: median, slowest | 83, 249 | 83, 156 |
+
+- **Baseline** (`evals/results/1-baseline.json`). The one miss: asked "How happy will
+  Americans be in 2040?", the desk wrote a story about past trends. The judge flagged seven
+  stories for lines like "the daily grind dictates your mood".
+- **Change 1** (`2-causal-wording.json`): the Lead now treats a forecast as outside the data,
+  and the Writer got a longer list of banned causal words. The forecast is now declined. The
+  judge's score did not move: the Writer reached for other verbs, mostly in headings ("trust
+  buffers a lower income"). A list of words was the wrong tool; a rule about what a heading
+  may claim is the next thing to try.
+- **Neither difference is bigger than the margin of error** (±1/√n). One sample out of 42 is
+  noise, and so is 23 against 23. What the numbers do support: the gold answer was in all 60
+  stories across both runs, and nearly every stated statistic traces to a query result.
+
+Two cautions about the scorers. The gold check looks for the number anywhere in the story, so
+a coincidence could pass it. And the judge is the same model that wrote the story, with a
+strict rubric: it flags the World Happiness Report's own "contribution" language too.
+
 ## What the data can't answer
 
 The agent is told to say so, and the data really can't: anything causal (these are
@@ -158,5 +278,13 @@ tell you".
 ## Deploy
 
 Continuous deploy from GitHub to Cloud Run using the included `Dockerfile` (listens on
-`$PORT`). The database and the archive ship in the image; no GCS needed. Set the Cloud Run
-request timeout to 600 s: a run makes a few dozen model calls and takes 2 to 4 minutes.
+`$PORT`). The database and the archive ship in the image; no GCS needed.
+
+- **Access.** The service sits behind Identity-Aware Proxy, restricted to columbia.edu
+  accounts.
+- **Spend.** The app also caps itself: at most 4 runs at once and 200 a day per instance
+  (`MAX_CONCURRENT_RUNS`, `MAX_RUNS_PER_DAY`). Past that, the page and `/chat` (with a 429) say
+  the desk is full.
+- **Time.** A run is built to finish inside five minutes. Set the Cloud Run request timeout
+  to 600 s anyway, and keep to one instance: the context panel and follow-up conversations
+  are held in memory.
