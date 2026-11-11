@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo.png" alt="the happiness desk" width="170" /></p>
+
 # the happiness desk
 
 [![Open the live desk](https://img.shields.io/badge/live_demo-open_the_happiness_desk-ffd84a?style=for-the-badge&logo=googlecloud&logoColor=1b1813)](https://happiness-agent-git-667678606632.europe-west1.run.app/)
