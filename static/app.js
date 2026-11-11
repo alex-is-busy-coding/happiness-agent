@@ -39,6 +39,8 @@ const state = {
     run: null, // the run in progress, if any
     liveRunId: null, // the last finished run, whose raw context the server still holds
     liveStoryId: null,
+    story: null, // the story on screen
+    clarifying: null, // the lead's last clarifying question, as a turn of history
     charts: [],
 };
 
@@ -230,6 +232,7 @@ const revealer = new IntersectionObserver(
 function renderStory(story, { live = false } = {}) {
     state.charts.forEach((chart) => chart.destroy());
     state.charts = [];
+    state.story = story;
     state.cache.set(story.id, story);
     live = live || story.id === state.liveStoryId;
 
@@ -540,7 +543,8 @@ function agentCard(name, wide = false) {
         el("header", {}, el("span", { class: "dot" }), el("span", { text: name }), el("span", { class: "flavor" })));
 }
 
-function ask(question) {
+// earlier: the turns this question follows on from, [{question, kind, reply}].
+function ask(question, earlier = []) {
     question = (question || "").trim();
     if (!question) return;
     endRun();
@@ -579,7 +583,9 @@ function ask(question) {
     showGuess();
     show("desk");
 
-    run.source = new EventSource("/run?" + new URLSearchParams({ question }));
+    const params = new URLSearchParams({ question });
+    if (earlier.length) params.set("history", JSON.stringify(earlier));
+    run.source = new EventSource("/run?" + params);
     run.source.onmessage = (message) => state.run === run && handle(JSON.parse(message.data));
     run.source.onerror = () => state.run === run && fail("Lost the connection to the server.");
 }
@@ -614,6 +620,7 @@ function handle(event) {
         renderStory(event.story, { live: true });
         renderShelves();
     } else if (event.type === "clarify") clarify(run.question, event);
+    else if (event.type === "busy") busy(run.question, event.message);
     else if (event.type === "error") fail(event.message);
 }
 
@@ -702,6 +709,8 @@ function askForm(value) {
 
 function clarify(question, event) {
     endRun();
+    // A typed reply to this card is an answer to the lead's question, so it travels with it.
+    state.clarifying = { question, kind: "clarify", reply: [event.message, ...(event.options || [])].join("\n- ") };
     $("#desk-eyebrow").textContent = "the desk has a question for you";
     outcomeBox(
         el("p", { class: "eyebrow", text: "before anyone starts digging" }),
@@ -709,6 +718,18 @@ function clarify(question, event) {
         el("p", { text: event.message }),
         el("div", { class: "tries" }, ...(event.options || []).map((option) => el("button", { type: "button", "data-ask": option, text: option }))),
         askForm(question)
+    );
+}
+
+function busy(question, message) {
+    endRun();
+    $("#desk-eyebrow").textContent = "the desk is full";
+    outcomeBox(
+        el("p", { class: "eyebrow", text: "not right now" }),
+        el("h2", { text: "everyone is out on a story" }),
+        el("p", { text: message }),
+        el("div", { class: "tries" }, el("button", { type: "button", "data-ask": question, text: "try again" })),
+        el("p", { class: "next-links" }, el("a", { href: "/", "data-home": true, text: "\u2190 read the archive meanwhile" }))
     );
 }
 
@@ -806,7 +827,9 @@ document.addEventListener("submit", (event) => {
     const form = event.target.closest("form.ask");
     if (!form) return;
     event.preventDefault();
-    ask(form.elements.question.value);
+    const story = form.closest("#story") && state.story;
+    const before = form.closest("#outcome") ? state.clarifying : story && { question: story.question, kind: "report", reply: story.answer || story.title };
+    ask(form.elements.question.value, before ? [before] : []);
 });
 
 document.addEventListener("click", (event) => {
